@@ -20,7 +20,7 @@ public class CharacterMove : MonoBehaviour
     private bool isRightDir = true;
     private Vector3 characterIniPos;
     private Quaternion characterIniRot;
-    private int jumpAllSegNum = 200;
+    private int jumpAllSegNum = 10000;
     private int jumpSegNum;
     private int touchesNum = 0;
     private bool isDrop = false;
@@ -71,7 +71,7 @@ public class CharacterMove : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.W) && this.jumpSegNum -- > 0)
+        if ((Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.W)) && this.jumpSegNum -- > 0)
         {
             this.isJump = true;
         }
@@ -91,7 +91,7 @@ public class CharacterMove : MonoBehaviour
             this.isMoveRight = false;
         }
 
-        if (Input.GetKeyUp(KeyCode.W) && this.isJump)
+        if ((Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.Space)) && this.isJump)
         {
             if (this.currJumpHeight > 2.5) {
                 this.moveAnimator.SetTrigger("startDrop");
@@ -105,27 +105,34 @@ public class CharacterMove : MonoBehaviour
     private void moveUpdate() 
     {
         if (this.isMoveLeft || this.isMoveRight) {
-            gameObject.transform.Translate(Vector3.right * this.runSpeed * Time.deltaTime);
+            // gameObject.transform.Translate(Vector3.right * this.runSpeed * Time.deltaTime);
+            if (this.isRightDir) {
+                this.rigidBody.AddForce(new Vector3(8, 0, 0));
+            } else {
+                this.rigidBody.AddForce(new Vector3(-8, 0, 0));
+            }
         }
 
-        if (this.isJump && this.currJumpHeight < this.jumpMaxHeight) 
+        // if (this.isJump && this.currJumpHeight < this.jumpMaxHeight) 
+        if (this.isJump)
         {
-            float delta = this.jumpSpeed;
-            if (this.currJumpHeight + this.jumpSpeed >= this.jumpMaxHeight)
-            {
-                delta = this.jumpMaxHeight - this.currJumpHeight;
-                this.isJump = false;
-                this.moveAnimator.SetTrigger("startDrop");
-                if (this.isMoveLeft || this.isMoveRight)
-                {
-                    this.moveAnimator.SetTrigger("stopRun");
-                }
-                this.currJumpHeight = 0;
-                this.isDrop = true;
+            // float delta = this.jumpSpeed;
+            // if (this.currJumpHeight + this.jumpSpeed >= this.jumpMaxHeight)
+            // {
+            //     delta = this.jumpMaxHeight - this.currJumpHeight;
+            //     this.isJump = false;
+            //     this.moveAnimator.SetTrigger("startDrop");
+            //     if (this.isMoveLeft || this.isMoveRight)
+            //     {
+            //         this.moveAnimator.SetTrigger("stopRun");
+            //     }
+            //     this.currJumpHeight = 0;
+            //     this.isDrop = true;
 
-            }
-            gameObject.transform.Translate(Vector3.up * delta);
-            this.currJumpHeight += delta;
+            // }
+            // gameObject.transform.Translate(Vector3.up * delta);
+            // this.currJumpHeight += delta;
+            this.rigidBody.AddForce(new Vector3(0, 30, 0));
         }
     }
 
@@ -140,11 +147,12 @@ public class CharacterMove : MonoBehaviour
     void OnCollisionEnter2D(Collision2D collision)
     {
         this.touchesNum ++;
-        if (collision.transform.name.Substring(0, 5) == "Grass" && this.isDrop && this.rigidBody.velocity == Vector2.zero)
+        if (collision.transform.name.Substring(0, 5) == "Grass" && this.isDrop)
         {
             this.moveAnimator.SetTrigger("DropOver");
             this.jumpSegNum = this.jumpAllSegNum;
             this.isDrop = false;
+
         }
     }
 

@@ -23,6 +23,7 @@ public class CharacterMove : MonoBehaviour
     private Vector2 rightMoveForce = new Vector2(8, 0);
     private Vector2 jumpForce = new Vector3(0,30);
     private float highyDropHeight = 3.5f;
+    private float brakeSpeedThreshold = 1;
 
 
     // Start is called before the first frame update
@@ -44,8 +45,8 @@ public class CharacterMove : MonoBehaviour
     }
 
     private void moveControl() {
-        // 按下按键
-        if (Input.GetKeyDown(KeyCode.A))
+        // 按住按键
+        if (Input.GetKey(KeyCode.A))
         {
             this.triggerSatetTrans("startRun");
             this.isRun = true;
@@ -55,7 +56,8 @@ public class CharacterMove : MonoBehaviour
                 this.isRightDir = false;
             }
         }
-        else if (Input.GetKeyDown(KeyCode.D))
+
+        if (Input.GetKey(KeyCode.D))
         {
             this.triggerSatetTrans("startRun");
             this.isRun = true;
@@ -66,14 +68,14 @@ public class CharacterMove : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.W) && this.jumpLeftSeg -- > 0)
+        if (Input.GetKey(KeyCode.W) && this.jumpLeftSeg -- > 0)
         {
             this.triggerSatetTrans("startJump");
             this.isJump = true;
         }
 
         // 松开按键
-        if (this.isRun && (!this.isRightDir && Input.GetKeyUp(KeyCode.A) || this.isRun && this.isRightDir && Input.GetKeyUp(KeyCode.D)))
+        if (this.isRun && ((!this.isRightDir && Input.GetKeyUp(KeyCode.A)) || (this.isRightDir && Input.GetKeyUp(KeyCode.D))))
         {
             this.triggerSatetTrans("stopRun");
             this.isRun = false;
@@ -119,7 +121,26 @@ public class CharacterMove : MonoBehaviour
                 this.triggerSatetTrans("startHighDrop");
             }
 
-        }     
+        } 
+        else if (this.standStatus == CharacterStandStatus.onGround)
+        {
+            if (!this.isRun)
+            {
+                if (System.Math.Abs(this.rigidBody.velocity.x) >= this.brakeSpeedThreshold)
+                {
+                    this.triggerSatetTrans("startBrake");
+                }
+                else
+                {
+                    this.triggerSatetTrans("brakeOver");
+                }
+
+            } else 
+            {
+                this.triggerSatetTrans("brakeOver");
+            }
+
+        }  
     }
 
     private void triggerSatetTrans(string param)
@@ -134,7 +155,7 @@ public class CharacterMove : MonoBehaviour
                 }
                 break;
             case "stopRun":
-                if (this.moveAnimator.GetCurrentAnimatorStateInfo(layer).IsName("Running") || this.moveAnimator.GetCurrentAnimatorStateInfo(layer).IsName("StartRun"))
+                if (this.moveAnimator.GetCurrentAnimatorStateInfo(layer).IsName("StartRun") || (this.moveAnimator.GetCurrentAnimatorStateInfo(layer).IsName("Running")))
                 {
                     this.moveAnimator.SetTrigger(param);
                 }
@@ -161,6 +182,20 @@ public class CharacterMove : MonoBehaviour
                 break;
             case "highDropOver":
                 if (this.moveAnimator.GetCurrentAnimatorStateInfo(layer).IsName("HighDrop"))
+                {
+                    this.moveAnimator.SetTrigger(param);
+                }
+                break;
+            case "startBrake":
+                if (this.moveAnimator.GetCurrentAnimatorStateInfo(layer).IsName("Running") ||
+                this.moveAnimator.GetCurrentAnimatorStateInfo(layer).IsName("Jump") ||
+                this.moveAnimator.GetCurrentAnimatorStateInfo(layer).IsName("HighDrop"))
+                {
+                    this.moveAnimator.SetTrigger(param);
+                }
+                break;
+            case "brakeOver":
+                if (this.moveAnimator.GetCurrentAnimatorStateInfo(layer).IsName("Brake"))
                 {
                     this.moveAnimator.SetTrigger(param);
                 }

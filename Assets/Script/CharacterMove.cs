@@ -1,29 +1,29 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public enum ChacterStatus
+public enum CharacterStandStatus
 {
-    onGround,
-    inAir
+    inAir,
+    onGround
 }
 public class CharacterMove : MonoBehaviour
 {
-    public bool isMoveLeft = false;
-    public bool isMoveRight = false;
+    public GameObject footHold;
+    private CharacterStandStatus standStatus;
+    private Vector3 characterIniPos;
+    private Quaternion characterIniRot;
+    public bool isRun = false;
     public bool isJump = false;
     private Animator moveAnimator;
     private Rigidbody2D rigidBody;
-    private float runSpeed = 5;
-    private float jumpMaxHeight = 5;
-    private float currJumpHeight = 0;
-    private float jumpSpeed = 0.3f;
     private bool isRightDir = true;
-    private Vector3 characterIniPos;
-    private Quaternion characterIniRot;
-    private int jumpAllSegNum = 10000;
-    private int jumpSegNum;
-    private int touchesNum = 0;
-    private bool isDrop = false;
+    private int jumpMaxSeg = 1;
+    private int jumpLeftSeg;
+    private Vector2 LeftMoveForce = new Vector2(-8, 0);
+    private Vector2 rightMoveForce = new Vector2(8, 0);
+    private Vector2 jumpForce = new Vector3(0,30);
+    private float highyDropHeight = 3.5f;
+
 
     // Start is called before the first frame update
     void Start()
@@ -32,7 +32,7 @@ public class CharacterMove : MonoBehaviour
         this.rigidBody = GetComponent<Rigidbody2D>();
         this.characterIniPos = transform.position;
         this.characterIniRot = transform.rotation;
-        this.jumpSegNum = this.jumpAllSegNum;
+        this.jumpLeftSeg = this.jumpMaxSeg;
     }
 
     // Update is called once per frame
@@ -40,20 +40,15 @@ public class CharacterMove : MonoBehaviour
     {
         this.moveControl();
         this.moveUpdate();
-        if (this.touchesNum <= 0 && !this.isJump && !this.isDrop)
-        {
-            this.isDrop = true;
-            this.jumpSegNum = 0;
-            this.moveAnimator.SetTrigger("startDrop");
-        }
+                    print("startHighDrop:" + this.moveAnimator.GetBool("startHighDrop"));
     }
 
     private void moveControl() {
         // 按下按键
         if (Input.GetKeyDown(KeyCode.A))
         {
-            this.moveAnimator.SetTrigger("startRun");
-            this.isMoveLeft = true;
+            this.triggerSatetTrans("startRun");
+            this.isRun = true;
             if (this.isRightDir)
             {
                 transform.Rotate(new Vector3(0, 180, 0));
@@ -62,8 +57,8 @@ public class CharacterMove : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.D))
         {
-            this.moveAnimator.SetTrigger("startRun");
-            this.isMoveRight = true;
+            this.triggerSatetTrans("startRun");
+            this.isRun = true;
             if (!this.isRightDir)
             {
                 transform.Rotate(new Vector3(0, 180, 0));
@@ -71,68 +66,109 @@ public class CharacterMove : MonoBehaviour
             }
         }
 
-        if ((Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.W)) && this.jumpSegNum -- > 0)
+        if (Input.GetKeyDown(KeyCode.W) && this.jumpLeftSeg -- > 0)
         {
+            this.triggerSatetTrans("startJump");
             this.isJump = true;
         }
 
         // 松开按键
-        if (Input.GetKeyUp(KeyCode.A) && this.isMoveLeft)
+        if (this.isRun && (!this.isRightDir && Input.GetKeyUp(KeyCode.A) || this.isRun && this.isRightDir && Input.GetKeyUp(KeyCode.D)))
         {
-            this.moveAnimator.SetTrigger("stopRun");
-            this.isMoveLeft = false;
+            this.triggerSatetTrans("stopRun");
+            this.isRun = false;
         }
 
-      
-        if (Input.GetKeyUp(KeyCode.D) && this.isMoveRight)
+        if (Input.GetKeyUp(KeyCode.W))
         {
-            gameObject.transform.Rotate(Vector3.right);
-            this.moveAnimator.SetTrigger("stopRun");
-            this.isMoveRight = false;
-        }
-
-        if ((Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.Space)) && this.isJump)
-        {
-            if (this.currJumpHeight > 2.5) {
-                this.moveAnimator.SetTrigger("startDrop");
-            }
             this.isJump = false;
-            this.currJumpHeight = 0;
-            this.isDrop = true;
         }
     }
 
     private void moveUpdate() 
     {
-        if (this.isMoveLeft || this.isMoveRight) {
-            // gameObject.transform.Translate(Vector3.right * this.runSpeed * Time.deltaTime);
+
+        if (this.isRun) {
             if (this.isRightDir) {
-                this.rigidBody.AddForce(new Vector3(8, 0, 0));
+                this.rigidBody.AddForce(this.rightMoveForce);
             } else {
-                this.rigidBody.AddForce(new Vector3(-8, 0, 0));
+                this.rigidBody.AddForce(this.LeftMoveForce);
             }
         }
 
-        // if (this.isJump && this.currJumpHeight < this.jumpMaxHeight) 
         if (this.isJump)
         {
-            // float delta = this.jumpSpeed;
-            // if (this.currJumpHeight + this.jumpSpeed >= this.jumpMaxHeight)
-            // {
-            //     delta = this.jumpMaxHeight - this.currJumpHeight;
-            //     this.isJump = false;
-            //     this.moveAnimator.SetTrigger("startDrop");
-            //     if (this.isMoveLeft || this.isMoveRight)
-            //     {
-            //         this.moveAnimator.SetTrigger("stopRun");
-            //     }
-            //     this.currJumpHeight = 0;
-            //     this.isDrop = true;
+            this.rigidBody.AddForce(this.jumpForce);
+        }
+        
+        RaycastHit2D hit2D = Physics2D.Raycast(this.footHold.transform.position, Vector2.down, 0.01f);
+        if (hit2D.collider)
+        {
+            this.standStatus = CharacterStandStatus.onGround;
+        }
+        else
+        {
+            this.standStatus = CharacterStandStatus.inAir;
+        }
 
-            // }
-            // gameObject.transform.Translate(Vector3.up * delta);
-            // this.currJumpHeight += delta;
-            this.rigidBody.AddForce(new Vector3(0, 30, 0));
+        if (this.standStatus == CharacterStandStatus.inAir)
+        {
+            hit2D = Physics2D.Raycast(this.footHold.transform.position, Vector2.down, this.highyDropHeight);
+            if (!hit2D.collider)
+            {
+                this.triggerSatetTrans("startHighDrop");
+            }
+
+        }     
+    }
+
+    private void triggerSatetTrans(string param)
+    {
+        int layer = 0;
+        switch(param)
+        {
+            case "startRun":
+                if (this.moveAnimator.GetCurrentAnimatorStateInfo(layer).IsName("Idle"))
+                {
+                    this.moveAnimator.SetTrigger(param);
+                }
+                break;
+            case "stopRun":
+                if (this.moveAnimator.GetCurrentAnimatorStateInfo(layer).IsName("Running") || this.moveAnimator.GetCurrentAnimatorStateInfo(layer).IsName("StartRun"))
+                {
+                    this.moveAnimator.SetTrigger(param);
+                }
+                break;
+            case "startJump":
+                if (this.moveAnimator.GetCurrentAnimatorStateInfo(layer).IsName("Idle") || this.moveAnimator.GetCurrentAnimatorStateInfo(layer).IsName("StartRun") 
+                || this.moveAnimator.GetCurrentAnimatorStateInfo(layer).IsName("Running"))
+                {
+                    this.moveAnimator.SetTrigger(param);
+                }
+                break;
+            case "lowDropOver":
+                if (this.moveAnimator.GetCurrentAnimatorStateInfo(layer).IsName("Jump"))
+                {
+                    this.moveAnimator.SetTrigger(param);
+                }
+                break;
+            case "startHighDrop":
+                if (this.moveAnimator.GetCurrentAnimatorStateInfo(layer).IsName("Idle") || this.moveAnimator.GetCurrentAnimatorStateInfo(layer).IsName("StartRun")
+                || this.moveAnimator.GetCurrentAnimatorStateInfo(layer).IsName("Running") || this.moveAnimator.GetCurrentAnimatorStateInfo(layer).IsName("Jump"))
+                {
+                    this.moveAnimator.SetTrigger(param);
+                }
+                break;
+            case "highDropOver":
+                if (this.moveAnimator.GetCurrentAnimatorStateInfo(layer).IsName("HighDrop"))
+                {
+                    this.moveAnimator.SetTrigger(param);
+                }
+                break;
+            default:
+                print("参数有误");
+                break;
+
         }
     }
 
@@ -142,23 +178,21 @@ public class CharacterMove : MonoBehaviour
         this.isRightDir = true;
         transform.SetPositionAndRotation(this.characterIniPos, this.characterIniRot);
         this.rigidBody.isKinematic = false;
-    }
 
+    }
     void OnCollisionEnter2D(Collision2D collision)
     {
-        this.touchesNum ++;
-        if (collision.transform.name.Substring(0, 5) == "Grass" && this.isDrop)
+        if (collision.transform.name.Substring(0, 5) == "Grass" && this.standStatus == CharacterStandStatus.onGround)
         {
-            this.moveAnimator.SetTrigger("DropOver");
-            this.jumpSegNum = this.jumpAllSegNum;
-            this.isDrop = false;
+            this.triggerSatetTrans("highDropOver");
+            this.triggerSatetTrans("lowDropOver");
 
+            this.jumpLeftSeg = this.jumpMaxSeg;
         }
     }
 
     void OnCollisionExit2D(Collision2D collision)
     {
-        this.touchesNum --;
     }
     
 }

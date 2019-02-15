@@ -169,7 +169,6 @@ public class CharacterMove : MonoBehaviour
         this.rigidBody.velocity = Vector3.zero;
         this.rigidBody.freezeRotation = true;
         transform.SetPositionAndRotation(this.characterIniPos, this.characterIniRot);
-        this.jumpLeftSeg = 0;
         // Fixme : 我们不需要举手庆祝重生
         //this.moveAnimator.SetTrigger(AniHashCode.toIdle);
         //this.moveAnimator.SetTrigger(AniHashCode.HighDropToIdle);

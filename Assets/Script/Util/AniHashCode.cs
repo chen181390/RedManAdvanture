@@ -26,10 +26,10 @@ public class AniHashCode
     public static int JumpToIdle = Animator.StringToHash("Jump -> Idle");
     public static int HighDropToIdle = Animator.StringToHash("HighDrop -> Idle");
 
-    public static int startRun = Animator.StringToHash("startRun");
-    public static int startJump = Animator.StringToHash("startJump");
-    public static int startHighDrop = Animator.StringToHash("startHighDrop");
-    public static int startBrake = Animator.StringToHash("startBrake");
-    public static int toIdle = Animator.StringToHash("toIdle");
+    public static int isGround = Animator.StringToHash("isGround");
+    public static int isBtnRun = Animator.StringToHash("isBtnRun");
+    public static int isBtnJump = Animator.StringToHash("isBtnJump");
+    public static int vecHeight = Animator.StringToHash("vecHeight");
+    public static int horSpeed = Animator.StringToHash("horSpeed");
     #endregion
 }

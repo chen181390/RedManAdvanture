@@ -1,0 +1,6 @@
+.vscode/
+Library/
+Temp/
+obj/
+Assembly-CSharp.csproj
+Packages/

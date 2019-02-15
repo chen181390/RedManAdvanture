@@ -307,7 +307,7 @@ GameObject:
   m_Component:
   - component: {fileID: 194606917}
   - component: {fileID: 194606918}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Left Hand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -729,7 +729,7 @@ GameObject:
   m_Component:
   - component: {fileID: 301923616}
   - component: {fileID: 301923617}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Right Eye
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1827,7 +1827,7 @@ GameObject:
   m_Component:
   - component: {fileID: 698675981}
   - component: {fileID: 698675982}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Right Hand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2014,7 +2014,7 @@ GameObject:
   - component: {fileID: 808179598}
   - component: {fileID: 808179600}
   - component: {fileID: 808179601}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Character
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2036,7 +2036,6 @@ Transform:
   - {fileID: 1568414231}
   - {fileID: 1254152462}
   - {fileID: 1813585651}
-  - {fileID: 997253509}
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2092,9 +2091,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e34a1d454f67248cd8ddf0a34689c143, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  footHold: {fileID: 997253508}
-  isRun: 0
-  isJump: 0
 --- !u!1 &832708785
 GameObject:
   m_ObjectHideFlags: 0
@@ -2110,7 +2106,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &832708786
 Transform:
   m_ObjectHideFlags: 0
@@ -2141,7 +2137,7 @@ GameObject:
   m_Component:
   - component: {fileID: 906522764}
   - component: {fileID: 906522765}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Left Arm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2300,7 +2296,7 @@ GameObject:
   m_Component:
   - component: {fileID: 951769558}
   - component: {fileID: 951769559}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Left Eye
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2527,36 +2523,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &997253508
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 997253509}
-  m_Layer: 0
-  m_Name: foothold
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &997253509
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 997253508}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.053, y: -0.97, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 808179597}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1013055206
 GameObject:
   m_ObjectHideFlags: 0
@@ -3174,7 +3140,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1205716484}
   - component: {fileID: 1205716485}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Right Arm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3360,7 +3326,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1254152462}
   - component: {fileID: 1254152463}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Right Foot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3882,7 +3848,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1360890676}
   - component: {fileID: 1360890677}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4150,7 +4116,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1568414231}
   - component: {fileID: 1568414232}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Left Foot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4645,7 +4611,7 @@ GameObject:
   - component: {fileID: 1813585651}
   - component: {fileID: 1813585653}
   - component: {fileID: 1813585652}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}

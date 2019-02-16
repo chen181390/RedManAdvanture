@@ -127,12 +127,20 @@ public class CharacterMove : MonoBehaviour
 
     }
 
-    public void resetCharacter()
-    {
-        this.rigidBody.velocity = Vector2.zero;
+     public void resetCharacter()
+     {
+        this.rigidBody.isKinematic = true;
         this.isRightDir = true;
+        this.rigidBody.velocity = Vector3.zero;
+        this.rigidBody.freezeRotation = true;
         transform.SetPositionAndRotation(this.characterIniPos, this.characterIniRot);
-    }
+        // Fixme : 我们不需要举手庆祝重生
+        //this.moveAnimator.SetTrigger(AniHashCode.toIdle);
+        //this.moveAnimator.SetTrigger(AniHashCode.HighDropToIdle);
+        this.rigidBody.isKinematic = false;
+        this.rigidBody.freezeRotation = false;
+
+     }
     void OnCollisionEnter2D(Collision2D collision)
     {
         if (this.isGround)

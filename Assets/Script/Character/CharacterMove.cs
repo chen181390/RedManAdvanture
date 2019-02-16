@@ -17,13 +17,7 @@ public class CharacterMove : MonoBehaviour
     private Vector2 LeftMoveForce = new Vector2(-8, 0);
     private Vector2 rightMoveForce = new Vector2(8, 0);
     private float maxRunSpeed = 10;
-    private Vector2 jumpImpulse = new Vector2(0, 10f);
-
-
-    // private int currState;
-    // private int currTrans;
-    // private int nextState;
-    // private bool isInTrans;
+    private float jumpIniSpeed = 10;
 
 
     // Start is called before the first frame update
@@ -60,9 +54,11 @@ public class CharacterMove : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.W) && this.jumpLeftSeg > 0)
+        if (Input.GetKeyDown(KeyCode.W) && this.jumpLeftSeg > 0 && !isJump)
         {
             this.isJump = true;
+            this.rigidBody.velocity = new Vector2(this.rigidBody.velocity.x, this.jumpIniSpeed);
+            this.jumpLeftSeg--;
         }
 
         if (this.isRun && (!this.isRightDir && Input.GetKeyUp(KeyCode.A) || this.isRightDir && Input.GetKeyUp(KeyCode.D)))
@@ -70,7 +66,13 @@ public class CharacterMove : MonoBehaviour
             this.isRun = false;
         }
 
-        if (Input.GetKeyUp(KeyCode.W))
+        if (Input.GetKeyUp(KeyCode.W) && this.isJump)
+        {
+            this.rigidBody.AddForce(new Vector2(0, -180));
+            this.isJump = false;
+        }
+
+        if (this.isJump && this.rigidBody.velocity.y <= 0)
         {
             this.isJump = false;
         }
@@ -102,12 +104,6 @@ public class CharacterMove : MonoBehaviour
             }
         }
 
-        if (this.isJump && this.jumpLeftSeg > 0)
-        {
-            this.rigidBody.AddForce(this.jumpImpulse, ForceMode2D.Impulse);
-            this.jumpLeftSeg--;
-        }
-
         // 给动画状态机参数赋值
         this.moveAnimator.SetBool(AniHashCode.isBtnRun, this.isRun);
         this.moveAnimator.SetBool(AniHashCode.isBtnJump, this.isJump);
@@ -120,9 +116,12 @@ public class CharacterMove : MonoBehaviour
             if (hit2D.distance <= 1)
             {
                 this.isGround = true;
-                this.moveAnimator.SetBool(AniHashCode.isGround, this.isGround);
-                print(this.isGround);
             }
+            else
+            {
+                this.isGround = false;
+            }
+            this.moveAnimator.SetBool(AniHashCode.isGround, this.isGround);
         }
 
 

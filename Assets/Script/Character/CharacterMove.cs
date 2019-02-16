@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class CharacterMove : MonoBehaviour
 {
@@ -19,6 +21,16 @@ public class CharacterMove : MonoBehaviour
     private float maxRunSpeed = 10;
     private float jumpIniSpeed = 10;
 
+    public EventTrigger leftTrigger;
+    public EventTrigger rightTrigger;
+    public EventTrigger jumpTrigger;
+    public Sprite[] btnLeftImgs = new Sprite[2];
+    public Sprite[] btnRightImgs = new Sprite[2];
+    public Sprite[] btnJumpImgs = new Sprite[2];
+
+
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -28,7 +40,135 @@ public class CharacterMove : MonoBehaviour
         this.characterIniPos = transform.position;
         this.characterIniRot = transform.rotation;
         this.jumpLeftSeg = this.jumpMaxSeg;
+        this.registerTrigger();
     }
+
+    private void registerTrigger()
+    {
+        EventTrigger.Entry entry = new EventTrigger.Entry();
+        entry.eventID = EventTriggerType.PointerDown;
+        entry.callback = new EventTrigger.TriggerEvent();
+        entry.callback.AddListener(this.onBtnLeftDown);
+        this.leftTrigger.triggers.Add(entry);
+
+        entry = new EventTrigger.Entry();
+        entry.eventID = EventTriggerType.PointerUp;
+        entry.callback = new EventTrigger.TriggerEvent();
+        entry.callback.AddListener(this.onBtnLeftUp);
+        this.leftTrigger.triggers.Add(entry);
+
+        entry = new EventTrigger.Entry();
+        entry.eventID = EventTriggerType.PointerExit;
+        entry.callback = new EventTrigger.TriggerEvent();
+        entry.callback.AddListener(this.onBtnLeftUp);
+        this.leftTrigger.triggers.Add(entry);
+
+        entry = new EventTrigger.Entry();
+        entry.eventID = EventTriggerType.PointerDown;
+        entry.callback = new EventTrigger.TriggerEvent();
+        entry.callback.AddListener(this.onBtnRightDown);
+        this.rightTrigger.triggers.Add(entry);
+
+        entry = new EventTrigger.Entry();
+        entry.eventID = EventTriggerType.PointerUp;
+        entry.callback = new EventTrigger.TriggerEvent();
+        entry.callback.AddListener(this.onBtnRightUp);
+        this.rightTrigger.triggers.Add(entry);
+
+        entry = new EventTrigger.Entry();
+        entry.eventID = EventTriggerType.PointerExit;
+        entry.callback = new EventTrigger.TriggerEvent();
+        entry.callback.AddListener(this.onBtnRightUp);
+        this.rightTrigger.triggers.Add(entry);
+
+        entry = new EventTrigger.Entry();
+        entry.eventID = EventTriggerType.PointerDown;
+        entry.callback = new EventTrigger.TriggerEvent();
+        entry.callback.AddListener(this.onBtnJumpDown);
+        this.jumpTrigger.triggers.Add(entry);
+
+        entry = new EventTrigger.Entry();
+        entry.eventID = EventTriggerType.PointerUp;
+        entry.callback = new EventTrigger.TriggerEvent();
+        entry.callback.AddListener(this.onBtnJumpUp);
+        this.jumpTrigger.triggers.Add(entry);
+
+        entry = new EventTrigger.Entry();
+        entry.eventID = EventTriggerType.PointerUp;
+        entry.callback = new EventTrigger.TriggerEvent();
+        entry.callback.AddListener(this.onBtnJumpUp);
+        this.jumpTrigger.triggers.Add(entry);
+
+    }
+
+    private void onBtnLeftDown(BaseEventData eventData = null)
+    {
+        Image btnImg = this.leftTrigger.GetComponent<Image>();
+        btnImg.sprite = this.btnLeftImgs[1];
+        this.isRun = true;
+        if (this.isRightDir)
+        {
+            transform.Rotate(new Vector3(0, 180, 0));
+            this.isRightDir = false;
+        }
+    }
+
+    private void onBtnLeftUp(BaseEventData eventData = null)
+    {   
+        Image btnImg = this.leftTrigger.GetComponent<Image>();
+        btnImg.sprite = this.btnLeftImgs[0];
+         if (this.isRun && !this.isRightDir)
+        {
+            this.isRun = false;
+        }
+    }
+
+    private void onBtnRightDown(BaseEventData eventData = null)
+    {
+        Image btnImg = this.rightTrigger.GetComponent<Image>();
+        btnImg.sprite = this.btnRightImgs[1];
+        this.isRun = true;
+        if (!this.isRightDir)
+        {
+            transform.Rotate(new Vector3(0, 180, 0));
+            this.isRightDir = true;
+        }
+    }
+
+    private void onBtnRightUp(BaseEventData eventData = null)
+    {
+        Image btnImg = this.rightTrigger.GetComponent<Image>();
+        btnImg.sprite = this.btnRightImgs[0];
+        if (this.isRun && this.isRightDir)
+        {
+            this.isRun = false;
+        }
+    }
+
+    private void onBtnJumpDown(BaseEventData eventData = null)
+    {
+        Image btnImg = this.jumpTrigger.GetComponent<Image>();
+        btnImg.sprite = this.btnJumpImgs[1];
+        if (this.jumpLeftSeg > 0 && !isJump)
+        {
+            this.isJump = true;
+            this.rigidBody.velocity = new Vector2(this.rigidBody.velocity.x, this.jumpIniSpeed);
+            this.jumpLeftSeg--;
+        }
+    }
+
+    private void onBtnJumpUp(BaseEventData eventData = null)
+    {
+        Image btnImg = this.jumpTrigger.GetComponent<Image>();
+        btnImg.sprite = this.btnJumpImgs[0];
+        if (this.isJump)
+        {
+            this.rigidBody.AddForce(new Vector2(0, -180));
+            this.isJump = false;
+        }
+    }
+
+
 
     // Update is called once per frame
     void Update()
@@ -36,40 +176,32 @@ public class CharacterMove : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.A))
         {
-            this.isRun = true;
-            if (Input.GetKey(KeyCode.A) && this.isRightDir)
-            {
-                transform.Rotate(new Vector3(0, 180, 0));
-                this.isRightDir = false;
-            }
+            this.onBtnLeftDown();
         }
 
         if (Input.GetKeyDown(KeyCode.D))
         {
-            this.isRun = true;
-            if (Input.GetKey(KeyCode.D) && !this.isRightDir)
-            {
-                transform.Rotate(new Vector3(0, 180, 0));
-                this.isRightDir = true;
-            }
+            this.onBtnRightDown();
         }
 
-        if (Input.GetKeyDown(KeyCode.W) && this.jumpLeftSeg > 0 && !isJump)
+        if (Input.GetKeyDown(KeyCode.W))
         {
-            this.isJump = true;
-            this.rigidBody.velocity = new Vector2(this.rigidBody.velocity.x, this.jumpIniSpeed);
-            this.jumpLeftSeg--;
+            this.onBtnJumpDown();
         }
 
-        if (this.isRun && (!this.isRightDir && Input.GetKeyUp(KeyCode.A) || this.isRightDir && Input.GetKeyUp(KeyCode.D)))
+        if (Input.GetKeyUp(KeyCode.A))
         {
-            this.isRun = false;
+            this.onBtnLeftUp();
         }
 
-        if (Input.GetKeyUp(KeyCode.W) && this.isJump)
+        if (Input.GetKeyUp(KeyCode.D))
         {
-            this.rigidBody.AddForce(new Vector2(0, -180));
-            this.isJump = false;
+            this.onBtnRightUp();
+        }
+
+        if (Input.GetKeyUp(KeyCode.W))
+        {
+            this.onBtnJumpUp();
         }
 
         if (this.isJump && this.rigidBody.velocity.y <= 0)
@@ -133,6 +265,7 @@ public class CharacterMove : MonoBehaviour
         this.isRightDir = true;
         transform.SetPositionAndRotation(this.characterIniPos, this.characterIniRot);
     }
+
     void OnCollisionEnter2D(Collision2D collision)
     {
         if (this.isGround)
@@ -140,9 +273,4 @@ public class CharacterMove : MonoBehaviour
             this.jumpLeftSeg = this.jumpMaxSeg;
         }
     }
-
-    void OnCollisionExit2D(Collision2D collision)
-    {
-    }
-
 }

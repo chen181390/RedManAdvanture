@@ -12,7 +12,7 @@ public enum DeathLineType
 }
 public class DeathLine : MonoBehaviour
 {    
-    public CharacterMove characterMove;
+    public CharacterBehaviour characterMove;
     public DeathLineType deathLineType;
 
     // Start is called before the first frame update

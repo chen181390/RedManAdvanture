@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class CharacterMove : MonoBehaviour
+public class CharacterBehaviour : MonoBehaviour
 {
     private bool isGround = true;
     private Vector3 characterIniPos;
@@ -94,7 +94,7 @@ public class CharacterMove : MonoBehaviour
         this.jumpTrigger.triggers.Add(entry);
 
         entry = new EventTrigger.Entry();
-        entry.eventID = EventTriggerType.PointerUp;
+        entry.eventID = EventTriggerType.PointerExit;
         entry.callback = new EventTrigger.TriggerEvent();
         entry.callback.AddListener(this.onBtnJumpUp);
         this.jumpTrigger.triggers.Add(entry);
@@ -262,6 +262,7 @@ public class CharacterMove : MonoBehaviour
     public void resetCharacter()
     {
         this.rigidBody.velocity = Vector2.zero;
+        this.rigidBody.angularVelocity = 0;
         this.isRightDir = true;
         transform.SetPositionAndRotation(this.characterIniPos, this.characterIniRot);
     }

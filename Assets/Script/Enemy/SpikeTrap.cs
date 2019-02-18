@@ -20,7 +20,10 @@ public class SpikeTrap : MonoBehaviour
         {
             for (int i = 0 ; i < this.transform.childCount ; i++)
             {
-                this.transform.GetChild(i).gameObject.SetActive(false);
+                var obj = this.transform.GetChild(i).gameObject;
+                obj.SetActive(false);
+                obj.transform.localScale = new Vector3(0.4f, 0.4f, 1);
+
             }
         }
 

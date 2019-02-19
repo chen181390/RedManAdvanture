@@ -21,6 +21,8 @@ public class Saw : MonoBehaviour
         this.iniPos = this.transform.position;
         this.direct = this.direct.normalized;
         this.character = GameObject.Find("Character").GetComponent<CharacterBehaviour>();
+        var rigidbody = this.GetComponent<Rigidbody2D>();
+        rigidbody.gravityScale = 0;
     }
 
     // Update is called once per frame

@@ -32,7 +32,7 @@ public class DeathLine : MonoBehaviour
         switch(this.deathLineType) 
         {
             case DeathLineType.down:
-                this.characterMove.resetCharacter();
+                this.characterMove.resetMission();
                 break;
             default:
                 break;

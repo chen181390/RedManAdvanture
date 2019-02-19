@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class AniHashCode
 {
+    // common
+    public static int Idle = Animator.StringToHash("Idle");
+
     // CharacterMove
     #region 
     public static int isGround = Animator.StringToHash("isGround");
@@ -15,6 +18,8 @@ public class AniHashCode
 
     // SpikeTrap
     #region
+    public static int PopUp = Animator.StringToHash("PopUp");
     public static int triggerPopUp = Animator.StringToHash("triggerPopUp");
+    public static int triggerReset = Animator.StringToHash("triggerReset");
     #endregion
 }

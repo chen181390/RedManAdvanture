@@ -28,6 +28,9 @@ public class CharacterBehaviour : MonoBehaviour
     public Sprite[] btnRightImgs = new Sprite[2];
     public Sprite[] btnJumpImgs = new Sprite[2];
 
+    public delegate void ResetMissionDelegate();
+    public event ResetMissionDelegate resetMissionEvent;
+
 
 
 
@@ -259,12 +262,14 @@ public class CharacterBehaviour : MonoBehaviour
 
     }
 
-    public void resetCharacter()
+    public void resetMission()
     {
         this.rigidBody.velocity = Vector2.zero;
         this.rigidBody.angularVelocity = 0;
         this.isRightDir = true;
         transform.SetPositionAndRotation(this.characterIniPos, this.characterIniRot);
+
+        this.resetMissionEvent();
     }
 
     void OnCollisionEnter2D(Collision2D collision)

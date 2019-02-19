@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public enum TrapType
+public enum SpikeTrapType
 {
     Motionless,
     Hiden,
@@ -10,7 +10,7 @@ public enum TrapType
 public class SpikeTrap : MonoBehaviour
 {
     private CharacterBehaviour character;
-    public TrapType trapType;
+    public SpikeTrapType trapType;
     private Vector2 iniPos;
     private Collider2D[] colliders;
 
@@ -21,7 +21,6 @@ public class SpikeTrap : MonoBehaviour
         this.character.resetMissionEvent += this.iniSpikeTrap;
         this.iniPos = this.transform.position;
         this.colliders = this.GetComponents<Collider2D>();
-
         this.iniSpikeTrap();
     }
 
@@ -29,11 +28,11 @@ public class SpikeTrap : MonoBehaviour
     {
         switch (this.trapType)
         {
-            case TrapType.Motionless:
+            case SpikeTrapType.Motionless:
                 this.colliders[1].enabled = true;
                 break;
 
-            case TrapType.Hiden:
+            case SpikeTrapType.Hiden:
                 for (int i = 0; i < this.transform.childCount; i++)
                 {
                     var obj = this.transform.GetChild(i).gameObject;
@@ -48,7 +47,7 @@ public class SpikeTrap : MonoBehaviour
                 this.colliders[1].enabled = true;
                 break;
 
-            case TrapType.DropDown:
+            case SpikeTrapType.DropDown:
                 var rigidBody = this.gameObject.GetComponent<Rigidbody2D>();
                 if (!rigidBody)
                 {
@@ -83,7 +82,7 @@ public class SpikeTrap : MonoBehaviour
 
             switch (this.trapType)
             {
-                case TrapType.Hiden:
+                case SpikeTrapType.Hiden:
                     this.colliders[1].enabled = false;
                     for (int i = 0; i < this.transform.childCount; i++)
                     {
@@ -94,7 +93,7 @@ public class SpikeTrap : MonoBehaviour
                     }
                     break;
 
-                case TrapType.DropDown:
+                case SpikeTrapType.DropDown:
                     this.colliders[1].enabled = false;
                     var rigidBody = this.gameObject.GetComponent<Rigidbody2D>();
                     rigidBody.gravityScale = 1;
@@ -104,7 +103,7 @@ public class SpikeTrap : MonoBehaviour
         }
         else if (collider.transform.name == "DeathLineBottom")
         {
-            if (this.trapType == TrapType.DropDown)
+            if (this.trapType == SpikeTrapType.DropDown)
             {
                 var rigidBody = this.GetComponent<Rigidbody2D>();
                 rigidBody.gravityScale = 0;

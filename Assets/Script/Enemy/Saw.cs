@@ -39,13 +39,13 @@ public class Saw : MonoBehaviour
         {
             case SawType.DirectByRoute:
                 var direct = (this.routePoints[targetIndex] - (Vector2)this.transform.position).normalized;
-                var delta = direct * speed * Time.deltaTime;
+                var delta = direct * this.speed * Time.deltaTime;
                 var nextPos = (Vector2)this.transform.position + delta;
-                var nextDirect = (routePoints[targetIndex] - nextPos).normalized;
+                var nextDirect = (this.routePoints[targetIndex] - nextPos).normalized;
                 // 到达目标点
-                if (!nextDirect.Equals(direct))
+                if (nextDirect != direct)
                 {
-                    this.transform.Translate(routePoints[targetIndex] - (Vector2)this.transform.position, Space.World);
+                    this.transform.Translate(this.routePoints[targetIndex] - (Vector2)this.transform.position, Space.World);
                     if (this.targetIndex == this.routePoints.Length - 1)
                     {
                         this.targetIndex = 0;

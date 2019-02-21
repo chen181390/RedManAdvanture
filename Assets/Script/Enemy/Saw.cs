@@ -3,46 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 public enum SawType
 {
-    MoveUntilBlock,
+    DirectByRoute
 }
 public class Saw : MonoBehaviour
 {
-    public Vector2 direct;
+    public Vector2[] roadPoints;
     public SawType sawType;
+    private Vector2 direct;
     public float speed;
-    private Vector3 iniPos;
     private CharacterBehaviour character;
-    private GameObject posCheckPoint;
-    private GameObject negCheckPoint;
-    private float colliderRadius;
-
+    private int targetIndex = 1;
 
     // Start is called before the first frame update
     void Start()
     {
-        this.iniPos = this.transform.position;
-        this.direct.Normalize();
+        for(int i = 0 ; i < this.roadPoints.Length ; i++)
+        {
+            this.roadPoints[i] = this.transform.parent.TransformPoint(this.roadPoints[i]);
+        }
+        this.transform.position = this.roadPoints[0];
         this.character = GameObject.Find("Character").GetComponent<CharacterBehaviour>();
-        this.colliderRadius = this.GetComponent<CircleCollider2D>().radius;
-        this.setCheckPoint();
-    }
-
-    private void setCheckPoint()
-    {
-        var checkPoint1 = this.transform.parent.Find("checkPoint1").gameObject;
-        var checkPoint2 = this.transform.parent.Find("checkPoint2").gameObject;
-        var direct1 = checkPoint1.transform.position - this.transform.parent.transform.position;
-        var direct2 = checkPoint2.transform.position - this.transform.parent.transform.position;
-        if (Vector2.Angle(direct, direct1) < Vector2.Angle(direct, direct2))
-        {
-            this.posCheckPoint = checkPoint1;
-            this.negCheckPoint = checkPoint2;
-        }
-        else
-        {
-            this.posCheckPoint = checkPoint2;
-            this.negCheckPoint = checkPoint1;
-        }
     }
 
     // Update is called once per frame
@@ -50,20 +30,36 @@ public class Saw : MonoBehaviour
     {
         switch(this.sawType)
         {
-            case SawType.MoveUntilBlock:
-                var hit = Physics2D.Raycast((Vector2)this.transform.position + this.direct * (this.colliderRadius + 0.1f), this.direct, 0.1f);
-                if (hit.transform == this.posCheckPoint.transform || hit.transform == this.negCheckPoint.transform)
+            case SawType.DirectByRoute:
+                var direct = (this.roadPoints[targetIndex] - (Vector2)this.transform.position).normalized;
+                var delta = direct * speed * Time.deltaTime;
+                var nextPos = (Vector2)this.transform.position + delta;
+                var nextDirect = (roadPoints[targetIndex] - nextPos).normalized;
+                // 到达目标点
+                if (!nextDirect.Equals(direct))
                 {
-                    this.direct = - this.direct;
+                    this.transform.Translate(roadPoints[targetIndex] - (Vector2)this.transform.position, Space.World);
+                    if (this.targetIndex == this.roadPoints.Length - 1)
+                    {
+                        this.targetIndex = 0;
+                    }
+                    else
+                    {
+                        this.targetIndex ++;
+                    }
+  
                 }
-                this.transform.Translate(this.direct * Time.deltaTime * speed);
+                else
+                {
+                    this.transform.Translate(delta, Space.World);
+                }
                 break;
         }
     }
 
-    void OnTriggerEnter2D(Collider2D collision)
+    void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.transform.name == "characterCollider")
+        if (collision.transform.name == "Character")
         {
             this.character.resetMission();
             return;

@@ -18,13 +18,13 @@ public class SpikeTrap : MonoBehaviour
     void Start()
     {
         this.character = GameObject.Find("Character").GetComponent<CharacterBehaviour>();
-        this.character.resetMissionEvent += this.iniSpikeTrap;
+        this.character.resetMissionEvent += this.resetSpikeTrap;
         this.iniPos = this.transform.position;
         this.colliders = this.GetComponents<Collider2D>();
-        this.iniSpikeTrap();
+        this.resetSpikeTrap();
     }
 
-    public void iniSpikeTrap()
+    public void resetSpikeTrap()
     {
         switch (this.trapType)
         {

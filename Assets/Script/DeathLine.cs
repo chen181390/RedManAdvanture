@@ -12,13 +12,13 @@ public enum DeathLineType
 }
 public class DeathLine : MonoBehaviour
 {    
-    public CharacterBehaviour characterMove;
+    private CharacterBehaviour character;
     public DeathLineType deathLineType;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        this.character = GameObject.Find("Character").GetComponent<CharacterBehaviour>();
     }
 
     // Update is called once per frame
@@ -27,14 +27,15 @@ public class DeathLine : MonoBehaviour
         
     }
 
-    void OnCollisionEnter2D(Collision2D coll)
+    void OnCollisionEnter2D(Collision2D collision)
     {
         switch(this.deathLineType) 
         {
             case DeathLineType.down:
-                this.characterMove.resetMission();
-                break;
-            default:
+                if (collision.transform == this.character.transform)
+                {
+                    this.character.resetMission();
+                }
                 break;
         }
 

@@ -10,13 +10,15 @@ public class AniHashCode
     // HomePageUI
     public static int triggerStartGame = Animator.StringToHash("triggerStartGame");
 
-    // CharacterMove
+    // Character
     #region 
     public static int isGround = Animator.StringToHash("isGround");
     public static int isBtnRun = Animator.StringToHash("isBtnRun");
     public static int isBtnJump = Animator.StringToHash("isBtnJump");
     public static int vecHeight = Animator.StringToHash("vecHeight");
     public static int horSpeed = Animator.StringToHash("horSpeed");
+    public static int triggerDead = Animator.StringToHash("triggerDead");
+    public static int triggerRebirth = Animator.StringToHash("triggerRebirth");
     #endregion
 
     // SpikeTrap

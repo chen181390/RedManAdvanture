@@ -93,7 +93,8 @@ public class Mace : MonoBehaviour
     {
         if (collision.transform == this.character.transform)
         {
-            this.character.resetMission();
+            // this.character.resetMission();
+            this.character.setCharacterDead();
         }
     }
 }

@@ -76,7 +76,8 @@ public class SpikeTrap : MonoBehaviour
         {
             if (!this.colliders[1].enabled)
             {
-                this.character.resetMission();
+                // this.character.resetMission();
+                this.character.setCharacterDead();
                 return;
             }
 

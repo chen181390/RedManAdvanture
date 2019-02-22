@@ -34,7 +34,8 @@ public class DeathLine : MonoBehaviour
             case DeathLineType.down:
                 if (collision.transform == this.character.transform)
                 {
-                    this.character.resetMission();
+                    // this.character.resetMission();
+                    this.character.setCharacterDead();
                 }
                 break;
         }

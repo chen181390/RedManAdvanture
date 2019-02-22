@@ -68,7 +68,7 @@ public class Saw : MonoBehaviour
     {
         if (collision.transform.name == "Character")
         {
-            this.character.resetMission();
+            this.character.setCharacterDead();
             return;
         }
     }

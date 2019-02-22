@@ -11,7 +11,7 @@ public class CharacterBehaviour : MonoBehaviour
     private Quaternion characterIniRot;
     private bool isRun = false;
     private bool isJump = false;
-    private Animator moveAnimator;
+    private Animator animator;
     private Rigidbody2D rigidBody;
     private bool isRightDir = true;
     private int jumpMaxSeg = 1;
@@ -38,7 +38,7 @@ public class CharacterBehaviour : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        this.moveAnimator = GetComponent<Animator>();
+        this.animator = GetComponent<Animator>();
         this.rigidBody = GetComponent<Rigidbody2D>();
         this.characterIniPos = this.transform.position;
         this.characterIniRot = this.transform.rotation;
@@ -245,14 +245,14 @@ public class CharacterBehaviour : MonoBehaviour
         }
 
         // 给动画状态机参数赋值
-        this.moveAnimator.SetBool(AniHashCode.isBtnRun, this.isRun);
-        this.moveAnimator.SetBool(AniHashCode.isBtnJump, this.isJump);
-        this.moveAnimator.SetFloat(AniHashCode.horSpeed, System.Math.Abs(this.rigidBody.velocity.x));
+        this.animator.SetBool(AniHashCode.isBtnRun, this.isRun);
+        this.animator.SetBool(AniHashCode.isBtnJump, this.isJump);
+        this.animator.SetFloat(AniHashCode.horSpeed, System.Math.Abs(this.rigidBody.velocity.x));
 
         RaycastHit2D hit2D = Physics2D.Raycast(this.transform.position, Vector2.down, 50, 511);
         if (hit2D.collider)
         {
-            this.moveAnimator.SetFloat(AniHashCode.vecHeight, hit2D.distance);
+            this.animator.SetFloat(AniHashCode.vecHeight, hit2D.distance);
             if (hit2D.distance <= 1)
             {
                 this.isGround = true;
@@ -261,10 +261,15 @@ public class CharacterBehaviour : MonoBehaviour
             {
                 this.isGround = false;
             }
-            this.moveAnimator.SetBool(AniHashCode.isGround, this.isGround);
+            this.animator.SetBool(AniHashCode.isGround, this.isGround);
         }
 
 
+    }
+
+    public void setCharacterDead()
+    {
+        this.animator.SetTrigger(AniHashCode.triggerDead);
     }
 
     public void resetMission()
@@ -273,6 +278,7 @@ public class CharacterBehaviour : MonoBehaviour
         this.rigidBody.angularVelocity = 0;
         this.isRightDir = true;
         transform.SetPositionAndRotation(this.characterIniPos, this.characterIniRot);
+        this.animator.SetTrigger(AniHashCode.triggerRebirth);
 
         this.resetMissionEvent();
     }

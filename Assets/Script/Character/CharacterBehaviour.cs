@@ -20,6 +20,7 @@ public class CharacterBehaviour : MonoBehaviour
     private Vector2 rightMoveForce = new Vector2(8, 0);
     private float maxRunSpeed = 10;
     private float jumpIniSpeed = 10;
+    private bool isDeading = false;
 
     public EventTrigger leftTrigger;
     public EventTrigger rightTrigger;
@@ -269,7 +270,16 @@ public class CharacterBehaviour : MonoBehaviour
 
     public void setCharacterDead()
     {
+        if (this.isDeading)
+        {
+            return;
+        }
+        this.isDeading = true;
         this.animator.SetTrigger(AniHashCode.triggerDead);
+        this.leftTrigger.transform.parent.gameObject.SetActive(false);
+        this.rigidBody.angularVelocity = 0;
+        this.isRun = false;
+        this.isJump = false;
     }
 
     public void resetMission()
@@ -279,8 +289,9 @@ public class CharacterBehaviour : MonoBehaviour
         this.isRightDir = true;
         transform.SetPositionAndRotation(this.characterIniPos, this.characterIniRot);
         this.animator.SetTrigger(AniHashCode.triggerRebirth);
-
+        this.leftTrigger.transform.parent.gameObject.SetActive(true);
         this.resetMissionEvent();
+        this.isDeading = false;
     }
 
     void OnCollisionEnter2D(Collision2D collision)

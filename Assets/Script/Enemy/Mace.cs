@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 public enum MaceType
 {
-    TriggerThenTrace
+    TriggerThenFieldTrace
 }
 
 public enum MaceStatus
@@ -16,15 +16,12 @@ public enum MaceStatus
 public class Mace : MonoBehaviour
 {
     public MaceType maceType;
-    public Vector2[] traceRoutePoints;
     public float traceSpeed;
     public float attackSpeed;
     private Vector2 iniPos;
     private MaceStatus status = MaceStatus.Untriggered;
     private CharacterBehaviour character;
     private Rigidbody2D characterRigidBody;
-    private int targetIndex;
-    private int finalTargetIndex;
 
     // Start is called before the first frame update
     void Start()
@@ -32,12 +29,7 @@ public class Mace : MonoBehaviour
         this.iniPos = this.transform.position;
         this.character = GameObject.Find("Character").GetComponent<CharacterBehaviour>();
         this.characterRigidBody = this.character.GetComponent<Rigidbody2D>();
-
-        for(int i = 0 ; i < this.traceRoutePoints.Length ; i++)
-        {
-            this.traceRoutePoints[i] = this.transform.parent.TransformPoint(this.traceRoutePoints[i]);
-        }
-
+        this.character.resetMissionEvent += resetMace;
     }
 
     private void resetMace()
@@ -52,43 +44,13 @@ public class Mace : MonoBehaviour
         switch(this.status)
         {
             case MaceStatus.InTrace:
-                if (this.transform.position.x > this.character.transform.position.x)
-                {
-                    for (int i = this.traceRoutePoints.Length - 1; i > 0; i--)
-                    {
-                        if (this.traceRoutePoints[i].x >= this.transform.position.x && this.traceRoutePoints[i - 1].x < this.transform.position.x)
-                        {
-                            this.targetIndex = i - 1;
-                            break;
-                        }
-                    }
-                }
-                else if (this.transform.position.x < this.character.transform.position.x)
-                {
-                    for (int i = 0; i < this.traceRoutePoints.Length - 1; i++)
-                    {
-                        // 确定当前目标点
-                        if (this.traceRoutePoints[i].x <= this.transform.position.x && this.traceRoutePoints[i + 1].x > this.transform.position.x)
-                        {
-                            this.targetIndex = i + 1;
-                            break;
-                        }
-                    }
-                }
+                var direct = (new Vector2(this.character.transform.position.x, 0) - new Vector2(this.transform.position.x, 0)).normalized;
+                this.transform.Translate(direct * this.traceSpeed * Time.deltaTime);
+                break;
 
-                // 移动
-                var direct = (this.traceRoutePoints[targetIndex] - (Vector2)this.transform.position).normalized;
-                var delta = direct * this.traceSpeed * Time.deltaTime;
-                var nextPos = (Vector2)this.transform.position + delta;
-                var nextDirect = (this.traceRoutePoints[targetIndex] - nextPos).normalized;
-                if (nextDirect != direct)
-                {
-                    this.transform.Translate(this.traceRoutePoints[targetIndex] - (Vector2)this.transform.position, Space.World);
-                }
-                else
-                {
-                    this.transform.Translate(delta, Space.World);
-                }
+            case MaceStatus.InAttack:
+                var direct2 = (this.character.transform.position - this.transform.position).normalized;
+                this.transform.Translate(direct2 * this.attackSpeed * Time.deltaTime);
                 break;
         }
     }
@@ -103,6 +65,26 @@ public class Mace : MonoBehaviour
                     this.status = MaceStatus.InTrace;
                     break;
 
+                case MaceStatus.InTrace:
+                    this.status = MaceStatus.InAttack;
+                    break;
+            }
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D collider)
+    {
+        if (collider.transform.name == "characterCollider")
+        {
+            switch (this.status)
+            {
+                case MaceStatus.InTrace:
+                    this.status = MaceStatus.Untriggered;
+                    break;
+
+                case MaceStatus.InAttack:
+                    this.status = MaceStatus.InTrace;
+                    break;
             }
         }
     }

@@ -7,6 +7,9 @@ public class AniHashCode
     // common
     public static int Idle = Animator.StringToHash("Idle");
 
+    // HomePageUI
+    public static int triggerStartGame = Animator.StringToHash("triggerStartGame");
+
     // CharacterMove
     #region 
     public static int isGround = Animator.StringToHash("isGround");

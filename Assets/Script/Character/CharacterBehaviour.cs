@@ -40,10 +40,15 @@ public class CharacterBehaviour : MonoBehaviour
     {
         this.moveAnimator = GetComponent<Animator>();
         this.rigidBody = GetComponent<Rigidbody2D>();
-        this.characterIniPos = transform.position;
-        this.characterIniRot = transform.rotation;
+        this.characterIniPos = this.transform.position;
+        this.characterIniRot = this.transform.rotation;
         this.jumpLeftSeg = this.jumpMaxSeg;
         this.registerTrigger();
+    }
+
+    public void setCharacterIniPos(Vector3 iniPos)
+    {
+        this.characterIniPos = iniPos;
     }
 
     private void registerTrigger()
@@ -126,7 +131,7 @@ public class CharacterBehaviour : MonoBehaviour
         }
     }
 
-    private void onBtnRightDown(BaseEventData eventData = null)
+    public void onBtnRightDown(BaseEventData eventData = null)
     {
         Image btnImg = this.rightTrigger.GetComponent<Image>();
         btnImg.sprite = this.btnRightImgs[1];
@@ -138,7 +143,7 @@ public class CharacterBehaviour : MonoBehaviour
         }
     }
 
-    private void onBtnRightUp(BaseEventData eventData = null)
+    public void onBtnRightUp(BaseEventData eventData = null)
     {
         Image btnImg = this.rightTrigger.GetComponent<Image>();
         btnImg.sprite = this.btnRightImgs[0];

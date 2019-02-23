@@ -9,10 +9,12 @@ public class DropGround : MonoBehaviour
     private CharacterBehaviour character;
     private GameObject DeathLineBottom;
     private Vector2 iniPos;
+    private Quaternion iniRot;
     // Start is called before the first frame update
     void Start()
     {
         this.iniPos = this.transform.position;
+        this.iniRot = this.transform.rotation;
         this.rigidBody = this.GetComponent<Rigidbody2D>();
         this.rigidBody.gravityScale = 0;
         this.character = GameObject.Find("Character").GetComponent<CharacterBehaviour>();
@@ -24,6 +26,7 @@ public class DropGround : MonoBehaviour
     {
         this.rigidBody.gravityScale = 0;
         this.transform.position = this.iniPos;
+        this.transform.rotation = this.iniRot;
         this.gameObject.SetActive(true);
     }
     // Update is called once per frame

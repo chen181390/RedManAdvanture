@@ -4,6 +4,12 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
+public enum MovePathType
+{
+    FlatPath,
+    UpHillPath,
+    DownHillPath
+}
 public class CharacterBehaviour : MonoBehaviour
 {
     private bool isGround = true;
@@ -16,12 +22,16 @@ public class CharacterBehaviour : MonoBehaviour
     private bool isRightDir = true;
     private int jumpMaxSeg = 1;
     private int jumpLeftSeg;
-    private Vector2 LeftMoveForce = new Vector2(-8, 0);
-    private Vector2 rightMoveForce = new Vector2(8, 0);
     private float maxRunSpeed = 10;
     private float jumpIniSpeed = 10;
     private bool isDeading = false;
+    public MovePathType movePathType;
+    private CharacterCamera characterCamera;
 
+
+    public float moveFlatForce = 8;
+    public float moveHillUpForce = 30;
+    public float moveHillDownForce = 10;
     public EventTrigger leftTrigger;
     public EventTrigger rightTrigger;
     public EventTrigger jumpTrigger;
@@ -39,6 +49,7 @@ public class CharacterBehaviour : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        this.characterCamera = GameObject.Find("Main Camera").GetComponent<CharacterCamera>();
         this.animator = GetComponent<Animator>();
         this.rigidBody = GetComponent<Rigidbody2D>();
         this.characterIniPos = this.transform.position;
@@ -224,11 +235,41 @@ public class CharacterBehaviour : MonoBehaviour
             {
                 if (this.isRightDir)
                 {
-                    this.rigidBody.AddForce(this.rightMoveForce);
+                    Vector2 force;
+                    switch (this.movePathType)
+                    {
+                        case MovePathType.FlatPath:
+                            force = this.moveFlatForce * Vector2.right;
+                            break;
+
+                        case MovePathType.UpHillPath:
+                            force = this.moveHillUpForce * (new Vector2(1, 1).normalized);
+                            break;
+
+                        default:
+                            force = this.moveHillDownForce * (new Vector2(1,-1).normalized);
+                            break;
+                    }
+                    this.rigidBody.AddForce(force);
                 }
                 else
                 {
-                    this.rigidBody.AddForce(this.LeftMoveForce);
+                    Vector2 force;
+                    switch (this.movePathType)
+                    {
+                        case MovePathType.FlatPath:
+                            force = this.moveFlatForce * Vector2.left;
+                            break;
+
+                        case MovePathType.UpHillPath:
+                            force = this.moveHillUpForce * (new Vector2(-1,1).normalized);
+                            break;
+
+                        default:
+                            force = this.moveHillDownForce * (new Vector2(-1, -1).normalized);
+                            break;
+                    }
+                    this.rigidBody.AddForce(force);
                 }
             }
             else
@@ -274,6 +315,8 @@ public class CharacterBehaviour : MonoBehaviour
         {
             return;
         }
+        this.rigidBody.AddForce(Vector2.up * 20, ForceMode2D.Impulse);
+        this.characterCamera.followType = CameraFollowType.Both;
         this.isDeading = true;
         this.animator.SetTrigger(AniHashCode.triggerDead);
         this.leftTrigger.transform.parent.gameObject.SetActive(false);
@@ -287,6 +330,7 @@ public class CharacterBehaviour : MonoBehaviour
         this.rigidBody.velocity = Vector2.zero;
         this.rigidBody.angularVelocity = 0;
         this.isRightDir = true;
+        this.characterCamera.followType = CameraFollowType.OnlyX;
         transform.SetPositionAndRotation(this.characterIniPos, this.characterIniRot);
         this.animator.SetTrigger(AniHashCode.triggerRebirth);
         this.leftTrigger.transform.parent.gameObject.SetActive(true);

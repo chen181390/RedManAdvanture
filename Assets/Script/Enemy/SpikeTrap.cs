@@ -28,9 +28,6 @@ public class SpikeTrap : MonoBehaviour
     {
         switch (this.trapType)
         {
-            case SpikeTrapType.Motionless:
-                this.colliders[1].enabled = true;
-                break;
 
             case SpikeTrapType.Hiden:
                 for (int i = 0; i < this.transform.childCount; i++)
@@ -74,16 +71,18 @@ public class SpikeTrap : MonoBehaviour
     {
         if (collider.transform.name == "characterCollider")
         {
-            if (!this.colliders[1].enabled)
-            {
-                // this.character.resetMission();
-                this.character.setCharacterDead();
-                return;
-            }
-
             switch (this.trapType)
             {
+                case SpikeTrapType.Motionless:
+                    this.character.setCharacterDead();
+                    break;
+
                 case SpikeTrapType.Hiden:
+                    if (!this.colliders[1].enabled)
+                    {
+                        this.character.setCharacterDead();
+                        return;
+                    }
                     this.colliders[1].enabled = false;
                     for (int i = 0; i < this.transform.childCount; i++)
                     {
@@ -95,6 +94,11 @@ public class SpikeTrap : MonoBehaviour
                     break;
 
                 case SpikeTrapType.DropDown:
+                    if (!this.colliders[1].enabled)
+                    {
+                        this.character.setCharacterDead();
+                        return;
+                    }
                     this.colliders[1].enabled = false;
                     var rigidBody = this.gameObject.GetComponent<Rigidbody2D>();
                     rigidBody.gravityScale = 1;

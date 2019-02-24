@@ -30,8 +30,8 @@ public class CharacterBehaviour : MonoBehaviour
 
 
     public float moveFlatForce = 8;
-    public float moveHillUpForce = 30;
-    public float moveHillDownForce = 10;
+    public float moveHillUpForce = 12;
+    public float moveHillDownForce = 8;
     public EventTrigger leftTrigger;
     public EventTrigger rightTrigger;
     public EventTrigger jumpTrigger;

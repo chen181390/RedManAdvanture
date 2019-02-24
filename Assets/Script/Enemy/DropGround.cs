@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class DropGround : MonoBehaviour
 {
-    public float gravityScaleOnTrigger;
+    public float gravityScaleOnTrigger = 20;
     private Rigidbody2D rigidBody;
     private CharacterBehaviour character;
     private GameObject DeathLineBottom;
     private Vector2 iniPos;
     private Quaternion iniRot;
+    private CharacterCamera characterCamera;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,12 +20,14 @@ public class DropGround : MonoBehaviour
         this.rigidBody.gravityScale = 0;
         this.character = GameObject.Find("Character").GetComponent<CharacterBehaviour>();
         this.DeathLineBottom = GameObject.Find("DeathLineBottom");
+        this.characterCamera = GameObject.Find("Main Camera").GetComponent<CharacterCamera>();
         this.character.resetMissionEvent += this.resetDropGround;
     }
 
     private void resetDropGround()
     {
         this.rigidBody.gravityScale = 0;
+        this.rigidBody.velocity = Vector2.zero;
         this.transform.position = this.iniPos;
         this.transform.rotation = this.iniRot;
         this.gameObject.SetActive(true);
@@ -40,6 +43,10 @@ public class DropGround : MonoBehaviour
         if (collision.transform == this.character.transform)
         {
             this.rigidBody.gravityScale = this.gravityScaleOnTrigger;
+            if (this.character.movePathType != MovePathType.FlatPath)
+            {
+                this.characterCamera.resetCamera();
+            }
         }
         else if (collision.transform == this.DeathLineBottom.transform)
         {

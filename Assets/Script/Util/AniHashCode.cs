@@ -6,6 +6,7 @@ public class AniHashCode
 {
     // common
     public static int Idle = Animator.StringToHash("Idle");
+    public static int triggerReset = Animator.StringToHash("triggerReset");
 
     // HomePageUI
     public static int triggerStartGame = Animator.StringToHash("triggerStartGame");
@@ -25,6 +26,11 @@ public class AniHashCode
     #region
     public static int PopUp = Animator.StringToHash("PopUp");
     public static int triggerPopUp = Animator.StringToHash("triggerPopUp");
-    public static int triggerReset = Animator.StringToHash("triggerReset");
+    #endregion
+
+    // shootMace
+    #region 
+    public static int triggerAwake = Animator.StringToHash("triggerAwake");
+    public static int triggerSleep = Animator.StringToHash("triggerSleep");
     #endregion
 }

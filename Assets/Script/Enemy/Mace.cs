@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 public enum MaceType
 {
-    TriggerThenFieldTrace
+    TriggerThenFieldTrace,
+    TriggerThenShoot
 }
 
 public enum MaceStatus

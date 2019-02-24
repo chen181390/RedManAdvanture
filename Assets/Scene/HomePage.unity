@@ -2084,7 +2084,7 @@ PrefabInstance:
     - target: {fileID: 6749480507682230910, guid: 22d8925abf3045242a214d143252775e,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 32.35
+      value: 22.8
       objectReference: {fileID: 0}
     - target: {fileID: 6749480507682230910, guid: 22d8925abf3045242a214d143252775e,
         type: 3}
@@ -3246,7 +3246,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 504753943}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4.26, y: -0.42, z: 0}
+  m_LocalPosition: {x: 20.13, y: -0.089999825, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 618935732}
@@ -4675,12 +4675,12 @@ PrefabInstance:
     - target: {fileID: 1246521252268737893, guid: a85dc99f82c635c4882227b7c6b2e2c8,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 22.29
+      value: 38.120003
       objectReference: {fileID: 0}
     - target: {fileID: 1246521252268737893, guid: a85dc99f82c635c4882227b7c6b2e2c8,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2
+      value: -1.79
       objectReference: {fileID: 0}
     - target: {fileID: 1246521252268737893, guid: a85dc99f82c635c4882227b7c6b2e2c8,
         type: 3}
@@ -6812,7 +6812,7 @@ PrefabInstance:
     - target: {fileID: 8190548120802588388, guid: 457576a7bc15fb84bbad66d4e3c50e7a,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 6.48
+      value: 6.39
       objectReference: {fileID: 0}
     - target: {fileID: 8190548120802588388, guid: 457576a7bc15fb84bbad66d4e3c50e7a,
         type: 3}
@@ -6867,7 +6867,12 @@ PrefabInstance:
     - target: {fileID: 8190548120802588389, guid: 457576a7bc15fb84bbad66d4e3c50e7a,
         type: 3}
       propertyPath: awakeMoveTarget.y
-      value: 15.35
+      value: 11.22
+      objectReference: {fileID: 0}
+    - target: {fileID: 8190548120802588389, guid: 457576a7bc15fb84bbad66d4e3c50e7a,
+        type: 3}
+      propertyPath: awakeMoveSpeed
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8190548120652133263, guid: 457576a7bc15fb84bbad66d4e3c50e7a,
         type: 3}
@@ -11132,7 +11137,7 @@ PrefabInstance:
     - target: {fileID: 6749480507682230910, guid: 22d8925abf3045242a214d143252775e,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 44.52
+      value: 48.06
       objectReference: {fileID: 0}
     - target: {fileID: 6749480507682230910, guid: 22d8925abf3045242a214d143252775e,
         type: 3}
@@ -14742,7 +14747,7 @@ PrefabInstance:
     - target: {fileID: 8190548120802588388, guid: 457576a7bc15fb84bbad66d4e3c50e7a,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 6.48
+      value: 6.39
       objectReference: {fileID: 0}
     - target: {fileID: 8190548120802588388, guid: 457576a7bc15fb84bbad66d4e3c50e7a,
         type: 3}
@@ -14797,7 +14802,12 @@ PrefabInstance:
     - target: {fileID: 8190548120802588389, guid: 457576a7bc15fb84bbad66d4e3c50e7a,
         type: 3}
       propertyPath: awakeMoveTarget.y
-      value: 15.35
+      value: 11.09
+      objectReference: {fileID: 0}
+    - target: {fileID: 8190548120802588389, guid: 457576a7bc15fb84bbad66d4e3c50e7a,
+        type: 3}
+      propertyPath: awakeMoveSpeed
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8190548120652133263, guid: 457576a7bc15fb84bbad66d4e3c50e7a,
         type: 3}
@@ -17105,7 +17115,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93ce729af6dcdd24d854ac97b4637403, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gravityScaleOnTrigger: 20
+  gravityScaleOnTrigger: 30
 --- !u!61 &5605968370634800184
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -17239,7 +17249,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93ce729af6dcdd24d854ac97b4637403, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gravityScaleOnTrigger: 20
+  gravityScaleOnTrigger: 30
 --- !u!50 &5605968371130571490
 Rigidbody2D:
   serializedVersion: 4
@@ -17415,7 +17425,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93ce729af6dcdd24d854ac97b4637403, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gravityScaleOnTrigger: 20
+  gravityScaleOnTrigger: 30
 --- !u!61 &5605968371276767004
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -17656,7 +17666,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93ce729af6dcdd24d854ac97b4637403, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gravityScaleOnTrigger: 20
+  gravityScaleOnTrigger: 30
 --- !u!50 &5605968371488282334
 Rigidbody2D:
   serializedVersion: 4
@@ -17840,12 +17850,12 @@ PrefabInstance:
     - target: {fileID: 8190548120802588388, guid: 457576a7bc15fb84bbad66d4e3c50e7a,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 97.83
+      value: 96.86
       objectReference: {fileID: 0}
     - target: {fileID: 8190548120802588388, guid: 457576a7bc15fb84bbad66d4e3c50e7a,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 6.32
+      value: 6.31
       objectReference: {fileID: 0}
     - target: {fileID: 8190548120802588388, guid: 457576a7bc15fb84bbad66d4e3c50e7a,
         type: 3}
@@ -17895,12 +17905,17 @@ PrefabInstance:
     - target: {fileID: 8190548120802588389, guid: 457576a7bc15fb84bbad66d4e3c50e7a,
         type: 3}
       propertyPath: awakeMoveTarget.x
-      value: 97.83
+      value: 94.06
       objectReference: {fileID: 0}
     - target: {fileID: 8190548120802588389, guid: 457576a7bc15fb84bbad66d4e3c50e7a,
         type: 3}
       propertyPath: awakeMoveTarget.y
-      value: 13.21
+      value: 10.56
+      objectReference: {fileID: 0}
+    - target: {fileID: 8190548120802588389, guid: 457576a7bc15fb84bbad66d4e3c50e7a,
+        type: 3}
+      propertyPath: awakeMoveSpeed
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 457576a7bc15fb84bbad66d4e3c50e7a, type: 3}

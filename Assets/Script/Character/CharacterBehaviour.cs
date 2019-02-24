@@ -23,7 +23,7 @@ public class CharacterBehaviour : MonoBehaviour
     private int jumpMaxSeg = 1;
     private int jumpLeftSeg;
     private float maxRunSpeed = 10;
-    private float jumpIniSpeed = 10;
+    private float jumpIniSpeed = 7;
     private bool isDeading = false;
     public MovePathType movePathType;
     private CharacterCamera characterCamera;
@@ -309,14 +309,17 @@ public class CharacterBehaviour : MonoBehaviour
 
     }
 
-    public void setCharacterDead()
+    public void setCharacterDead(bool isCameraFollow = true)
     {
         if (this.isDeading)
         {
             return;
         }
         this.rigidBody.AddForce(Vector2.up * 20, ForceMode2D.Impulse);
-        this.characterCamera.followType = CameraFollowType.Both;
+        if (isCameraFollow)
+        {
+            this.characterCamera.followType = CameraFollowType.Both;
+        }
         this.isDeading = true;
         this.animator.SetTrigger(AniHashCode.triggerDead);
         this.leftTrigger.transform.parent.gameObject.SetActive(false);

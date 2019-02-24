@@ -23,7 +23,7 @@ public class FlatPath : MonoBehaviour
     {
         if (collision.transform == this.character.transform)
         {
-            if (this.character.movePathType != MovePathType.FlatPath)
+            if (this.characterCamera.followType != CameraFollowType.OnlyX)
             {
                 this.characterCamera.resetCamera();
             }

@@ -262,11 +262,11 @@ public class CharacterBehaviour : MonoBehaviour
                             break;
 
                         case MovePathType.UpHillPath:
-                            force = this.moveHillUpForce * (new Vector2(-1,1).normalized);
+                            force = this.moveHillUpForce * (new Vector2(-1,-1).normalized);
                             break;
 
                         default:
-                            force = this.moveHillDownForce * (new Vector2(-1, -1).normalized);
+                            force = this.moveHillDownForce * (new Vector2(-1, 1).normalized);
                             break;
                     }
                     this.rigidBody.AddForce(force);

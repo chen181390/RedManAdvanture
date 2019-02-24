@@ -29,11 +29,19 @@ public class HillPath : MonoBehaviour
     {
         if (collision.transform == this.character.transform)
         {
-            if (this.pathType == HillPathType.Up)
+            switch (this.pathType)
             {
-                this.character.movePathType = MovePathType.UpHillPath;
-                this.characterCamera.followType = CameraFollowType.Both;
+                case HillPathType.Up:
+                    this.character.movePathType = MovePathType.UpHillPath;
+                    this.characterCamera.followType = CameraFollowType.Both;
+                    break;
+
+                case HillPathType.Down:
+                    this.character.movePathType = MovePathType.DownHillPath;
+                    this.characterCamera.followType = CameraFollowType.Both;
+                    break;
             }
+
         }
     }
 

@@ -43,7 +43,7 @@ public class DropGround : MonoBehaviour
         if (collision.transform == this.character.transform)
         {
             this.rigidBody.gravityScale = this.gravityScaleOnTrigger;
-            if (this.character.movePathType != MovePathType.FlatPath)
+            if (this.character.pathType != PathBlockType.FlatPath)
             {
                 this.characterCamera.resetCamera();
             }

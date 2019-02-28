@@ -12,7 +12,7 @@ public class Saw : MonoBehaviour
     private Vector2 direct;
     public float speed;
     private CharacterBehaviour character;
-    private int targetIndex = 1;
+    private int routeTarget = 1;
 
     // Start is called before the first frame update
     void Start()
@@ -29,7 +29,7 @@ public class Saw : MonoBehaviour
     private void resetSaw()
     {
         this.transform.position = this.routePoints[0];
-        this.targetIndex = 1;
+        this.routeTarget = 1;
     }
 
     // Update is called once per frame
@@ -38,21 +38,21 @@ public class Saw : MonoBehaviour
         switch(this.sawType)
         {
             case SawType.DirectByRoute:
-                var direct = (this.routePoints[targetIndex] - (Vector2)this.transform.position).normalized;
+                var direct = (this.routePoints[routeTarget] - (Vector2)this.transform.position).normalized;
                 var delta = direct * this.speed * Time.deltaTime;
                 var nextPos = (Vector2)this.transform.position + delta;
-                var nextDirect = (this.routePoints[targetIndex] - nextPos).normalized;
+                var nextDirect = (this.routePoints[routeTarget] - nextPos).normalized;
                 // 到达目标点
                 if (nextDirect != direct)
                 {
-                    this.transform.Translate(this.routePoints[targetIndex] - (Vector2)this.transform.position, Space.World);
-                    if (this.targetIndex == this.routePoints.Length - 1)
+                    this.transform.Translate(this.routePoints[routeTarget] - (Vector2)this.transform.position, Space.World);
+                    if (this.routeTarget == this.routePoints.Length - 1)
                     {
-                        this.targetIndex = 0;
+                        this.routeTarget = 0;
                     }
                     else
                     {
-                        this.targetIndex ++;
+                        this.routeTarget ++;
                     }
   
                 }

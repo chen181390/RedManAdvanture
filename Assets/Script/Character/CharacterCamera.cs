@@ -44,7 +44,6 @@ public class CharacterCamera : MonoBehaviour
         this.cameraCharacterDistanceY + this.character.transform.position.y - this.transform.position.y));
     }
 
-
     // Update is called once per frame
     void Update()
     {

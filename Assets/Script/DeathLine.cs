@@ -35,7 +35,7 @@ public class DeathLine : MonoBehaviour
                 if (collision.transform == this.character.transform)
                 {
     
-                    this.character.setCharacterDead(false);
+                    this.character.setCharacterDead();
                 }
                 break;
         }

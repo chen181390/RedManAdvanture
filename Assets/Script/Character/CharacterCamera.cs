@@ -1,20 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public enum CameraFollowType
-{
-    OnlyX,
-    Both
-}
 public class CharacterCamera : MonoBehaviour
 {
-    public CameraFollowType followType = CameraFollowType.OnlyX;
     private CharacterBehaviour character;
     private Camera characterCamera;
     private float cameraCharacterDistanceX;
     private float cameraCharacterDistanceY;
-    public float startPosLimit;
-    private float endPosLimit;
+    public float startPosLimitX;
+    private float endPosLimitX;
+    public float maxLimitY;
+    public float minLimitY;
     private GameObject deathLineRight;
 
 
@@ -27,11 +23,11 @@ public class CharacterCamera : MonoBehaviour
         float defaultSize = this.characterCamera.orthographicSize;
         this.characterCamera.orthographicSize = (float)Screen.height / 100 / 2;
 
-        this.startPosLimit += this.characterCamera.orthographicSize - defaultSize;
-        this.endPosLimit = this.deathLineRight.transform.position.x - this.characterCamera.orthographicSize;
+        this.startPosLimitX += this.characterCamera.orthographicSize - defaultSize;
+        this.endPosLimitX = this.deathLineRight.transform.position.x - this.characterCamera.orthographicSize;
 
         this.cameraCharacterDistanceX = (0.5f - 0.382f) * this.characterCamera.orthographicSize * 2;
-        this.cameraCharacterDistanceY = 3.12f;
+        this.cameraCharacterDistanceY = this.characterCamera.transform.position.y - this.character.transform.position.y;
         this.resetCamera();
 
         this.character.resetMissionEvent += this.resetCamera;
@@ -39,31 +35,46 @@ public class CharacterCamera : MonoBehaviour
 
     public void resetCamera()
     {
-        this.followType = CameraFollowType.OnlyX;
-        this.transform.Translate(new Vector2(this.startPosLimit - this.transform.position.x, 
+        this.transform.Translate(new Vector2(this.startPosLimitX - this.transform.position.x, 
         this.cameraCharacterDistanceY + this.character.transform.position.y - this.transform.position.y));
     }
 
     // Update is called once per frame
     void Update()
     {
-        float deltaMoveX = this.character.transform.position.x - this.transform.position.x + this.cameraCharacterDistanceX;
-        float deltaMoveY = 0;
-        if (this.followType == CameraFollowType.Both)
+
+        float nextX = this.character.transform.position.x + this.cameraCharacterDistanceX;
+        float nextY = this.cameraCharacterDistanceY + this.character.transform.position.y;
+        float deltaMoveX;
+        float deltaMoveY;
+
+        if (nextY <= this.minLimitY)
         {
-            deltaMoveY = this.cameraCharacterDistanceY + this.character.transform.position.y - this.transform.position.y;
+            deltaMoveY = this.minLimitY - this.transform.position.y;
         }
-        if (this.transform.position.x + deltaMoveX <= this.startPosLimit)
+        else if (nextY > this.maxLimitY)
         {
-            this.transform.Translate(new Vector2(this.startPosLimit - this.transform.position.x, deltaMoveY));
-        }
-        else if (this.transform.position.x + deltaMoveX > this.endPosLimit)
-        {
-            this.transform.Translate(new Vector2(this.endPosLimit - this.transform.position.x, deltaMoveY));
+            deltaMoveY = this.maxLimitY - this.transform.position.y;
         }
         else
         {
-            this.transform.Translate(new Vector2(deltaMoveX, deltaMoveY));
+            deltaMoveY = nextY - this.transform.position.y;
         }
+
+
+        if (nextX <= this.startPosLimitX)
+        {
+            deltaMoveX = this.startPosLimitX - this.transform.position.x;
+        }
+        else if (nextX > this.endPosLimitX)
+        {
+            deltaMoveX = this.endPosLimitX - this.transform.position.x;
+        }
+        else
+        {
+            deltaMoveX = nextX - this.transform.position.x;
+        }
+
+        this.transform.Translate(new Vector2(deltaMoveX, deltaMoveY));
     }
 }

@@ -18,7 +18,6 @@ public enum PathBlockBehaviourType
 public class PathBlock : MonoBehaviour
 {
     public PathBlockType pathType;
-    public CameraFollowType cameraFollowType;
     public PathBlockBehaviourType behaviourType;
     public Vector2[] routePoints;
     public float moveSpeed;
@@ -36,18 +35,6 @@ public class PathBlock : MonoBehaviour
     {
         this.character = GameObject.Find("Character").GetComponent<CharacterBehaviour>();
         this.characterCamera = GameObject.Find("Main Camera").GetComponent<CharacterCamera>();
-
-        switch (this.pathType)
-        {
-            case PathBlockType.FlatPath:
-                this.cameraFollowType = CameraFollowType.OnlyX;
-                break;
-
-            case PathBlockType.LeftHillPath:
-            case PathBlockType.RightHillPath:
-                this.cameraFollowType = CameraFollowType.Both;
-                break;
-        }
 
         switch (this.behaviourType)
         {
@@ -131,7 +118,6 @@ public class PathBlock : MonoBehaviour
 
         if (collision.transform == this.character.transform)
         {
-            this.characterCamera.followType = this.cameraFollowType;
             this.character.pathType = this.pathType;
 
             switch (this.behaviourType)

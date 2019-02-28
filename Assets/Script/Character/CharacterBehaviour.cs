@@ -165,21 +165,7 @@ public class CharacterBehaviour : MonoBehaviour
         if (this.jumpLeftSeg > 0 && !isJump && this.isGround)
         {
             this.isJump = true;
-            switch (this.pathType)
-            {
-                case PathBlockType.FlatPath:
-                    this.rigidBody.velocity = this.rigidBody.velocity + new Vector2(0, this.jumpIniSpeed);
-                   break;
-
-                case PathBlockType.LeftHillPath:
-                    this.rigidBody.velocity = this.rigidBody.velocity + (new Vector2(-1, 1)).normalized * this.jumpIniSpeed;
-                    break;
-                
-                case PathBlockType.RightHillPath:
-                    this.rigidBody.velocity =  this.rigidBody.velocity + (new Vector2(1, 1)).normalized * this.jumpIniSpeed;
-                    break;
-
-            }
+            this.rigidBody.velocity += new Vector2(0, this.jumpIniSpeed);
 
             this.jumpLeftSeg--;
         }
@@ -244,39 +230,53 @@ public class CharacterBehaviour : MonoBehaviour
                 if (this.isRightDir)
                 {
                     Vector2 force;
-                    switch (this.pathType)
+                    if (!this.isJump)
                     {
-                        case PathBlockType.FlatPath:
-                            force = this.flatRunForce * Vector2.right;
-                            break;
+                        switch (this.pathType)
+                        {
+                            case PathBlockType.FlatPath:
+                                force = this.flatRunForce * Vector2.right;
+                                break;
 
-                        case PathBlockType.LeftHillPath:
-                            force = this.upHillRunForce * (new Vector2(1, 1).normalized);
-                            break;
+                            case PathBlockType.LeftHillPath:
+                                force = this.upHillRunForce * (new Vector2(1, 1).normalized);
+                                break;
 
-                        default:
-                            force = this.downHillRunForce * (new Vector2(1,-1).normalized);
-                            break;
+                            default:
+                                force = this.downHillRunForce * (new Vector2(1, -1).normalized);
+                                break;
 
+                        }
+                    } 
+                    else
+                    {
+                        force = this.flatRunForce * Vector2.right;
                     }
                     this.rigidBody.AddForce(force);
                 }
                 else
                 {
                     Vector2 force;
-                    switch (this.pathType)
+                    if (!this.isJump)
                     {
-                        case PathBlockType.FlatPath:
-                            force = this.flatRunForce * Vector2.left;
-                            break;
+                        switch (this.pathType)
+                        {
+                            case PathBlockType.FlatPath:
+                                force = this.flatRunForce * Vector2.left;
+                                break;
 
-                        case PathBlockType.LeftHillPath:
-                            force = this.downHillRunForce * (new Vector2(-1,-1).normalized);
-                            break;
+                            case PathBlockType.LeftHillPath:
+                                force = this.downHillRunForce * (new Vector2(-1, -1).normalized);
+                                break;
 
-                        default:
-                            force = this.upHillRunForce * (new Vector2(-1, 1).normalized);
-                            break;
+                            default:
+                                force = this.upHillRunForce * (new Vector2(-1, 1).normalized);
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        force = this.flatRunForce * Vector2.left;
                     }
                     this.rigidBody.AddForce(force);
                 }
@@ -318,17 +318,13 @@ public class CharacterBehaviour : MonoBehaviour
 
     }
 
-    public void setCharacterDead(bool isCameraFollow = true)
+    public void setCharacterDead()
     {
         if (this.isDeading)
         {
             return;
         }
         this.rigidBody.AddForce(Vector2.up * 20, ForceMode2D.Impulse);
-        if (isCameraFollow)
-        {
-            this.characterCamera.followType = CameraFollowType.Both;
-        }
         this.isDeading = true;
         this.animator.SetTrigger(AniHashCode.triggerDead);
         this.leftTrigger.transform.parent.gameObject.SetActive(false);
@@ -342,7 +338,6 @@ public class CharacterBehaviour : MonoBehaviour
         this.rigidBody.velocity = Vector2.zero;
         this.rigidBody.angularVelocity = 0;
         this.isRightDir = true;
-        this.characterCamera.followType = CameraFollowType.OnlyX;
         transform.SetPositionAndRotation(this.characterIniPos, this.characterIniRot);
         this.animator.SetTrigger(AniHashCode.triggerRebirth);
         this.leftTrigger.transform.parent.gameObject.SetActive(true);

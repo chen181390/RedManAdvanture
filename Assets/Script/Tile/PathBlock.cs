@@ -58,6 +58,11 @@ public class PathBlock : MonoBehaviour
                 this.character.resetMissionEvent += this.resetPathBlock;
                 break;
 
+            case PathBlockBehaviourType.TriggerThenDirectByRoute:
+                this.iniPos = this.transform.position;
+                this.iniRot = this.transform.rotation;
+                this.character.resetMissionEvent += this.resetPathBlock;
+                break;
 
         }
     }

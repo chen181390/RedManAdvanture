@@ -1,20 +1,24 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public enum DeathLineType
 {
-    up,
-    down,
-    left,
-    right,
+    Up,
+    Down,
+    Left,
+    Right,
 
 }
 public class DeathLine : MonoBehaviour
 {    
     private CharacterBehaviour character;
     public DeathLineType deathLineType;
+    public Image touchBlock;
 
+    private AsyncOperation asyncOperation;
     // Start is called before the first frame update
     void Start()
     {
@@ -24,21 +28,27 @@ public class DeathLine : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
     }
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        switch(this.deathLineType) 
+        if (collision.transform == this.character.transform)
         {
-            case DeathLineType.down:
-                if (collision.transform == this.character.transform)
-                {
-    
+            switch (this.deathLineType)
+            {
+                case DeathLineType.Down:
                     this.character.setCharacterDead();
-                }
-                break;
+                    break;
+
+                case DeathLineType.Right:
+                    // this.asyncOperation = SceneManager.LoadSceneAsync(2);
+                    break;
+
+
+            }
         }
+
+
 
     }
 }

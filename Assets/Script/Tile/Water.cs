@@ -5,7 +5,7 @@ using UnityEngine;
 public class Water : MonoBehaviour
 {
     public Sprite[] waterAtlas;
-    private int currIndex = 0;
+    private int currAtlasIndex = 0;
     private SpriteRenderer spriteRenderer;
 
     // Start is called before the first frame update
@@ -17,9 +17,9 @@ public class Water : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        this.spriteRenderer.sprite = this.waterAtlas[this.currIndex];
-        this.currIndex ++;
-        if (this.currIndex > this.waterAtlas.Length - 1)
-            this.currIndex = 0;
+        this.spriteRenderer.sprite = this.waterAtlas[this.currAtlasIndex];
+        this.currAtlasIndex ++;
+        if (this.currAtlasIndex > this.waterAtlas.Length - 1)
+            this.currAtlasIndex = 0;
     }
 }

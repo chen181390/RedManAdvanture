@@ -23,7 +23,7 @@ public class CharacterBehaviour : MonoBehaviour
 
 
     public float flatRunForce = 8;
-    public float upHillRunForce = 9;
+    public float upHillRunForce = 10;
     public float downHillRunForce = 8;
     public EventTrigger leftTrigger;
     public EventTrigger rightTrigger;
@@ -341,6 +341,11 @@ public class CharacterBehaviour : MonoBehaviour
         transform.SetPositionAndRotation(this.characterIniPos, this.characterIniRot);
         this.animator.SetTrigger(AniHashCode.triggerRebirth);
         this.leftTrigger.transform.parent.gameObject.SetActive(true);
+
+        this.onBtnJumpUp();
+        this.onBtnLeftUp();
+        this.onBtnRightUp();
+
         this.resetMissionEvent();
         this.isDeading = false;
     }

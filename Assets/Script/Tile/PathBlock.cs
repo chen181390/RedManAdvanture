@@ -116,7 +116,7 @@ public class PathBlock : MonoBehaviour
     void OnCollisionEnter2D(Collision2D collision)
     {
 
-        if (collision.transform == this.character.transform)
+        if (collision.transform.name == "Character")
         {
             this.character.pathType = this.pathType;
 

@@ -13,6 +13,7 @@ public class Saw : MonoBehaviour
     public float speed;
     private CharacterBehaviour character;
     private int routeTarget = 1;
+    private bool isForward = true;
 
     // Start is called before the first frame update
     void Start()
@@ -48,11 +49,20 @@ public class Saw : MonoBehaviour
                     this.transform.Translate(this.routePoints[routeTarget] - (Vector2)this.transform.position, Space.World);
                     if (this.routeTarget == this.routePoints.Length - 1)
                     {
-                        this.routeTarget = 0;
+                        this.routeTarget --;
+                        this.isForward = false;
+                    } 
+                    else if (this.routeTarget == 0)
+                    {
+                        this.routeTarget ++;
+                        this.isForward = true;
                     }
                     else
                     {
-                        this.routeTarget ++;
+                        if (this.isForward)
+                            this.routeTarget ++;
+                        else
+                            this.routeTarget --;
                     }
   
                 }

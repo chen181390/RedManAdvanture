@@ -7,6 +7,7 @@ public enum ShootMaceStatus
     Awaking,
     Awaked
 }
+
 public class ShootMace : MonoBehaviour
 {
     public GameObject prefabSpike;
@@ -14,6 +15,10 @@ public class ShootMace : MonoBehaviour
     public float awakeMoveSpeed = 1;
     public float shootInterval = 1;
     private float shootLeftTime = 0;
+    public bool isTrace;
+    public float traceLeftLimitX;
+    public float traceRightLimitX;
+    public float traceSpeed;
 
     private ShootMaceStatus status = ShootMaceStatus.sleeped;
     private Animator animator;
@@ -28,6 +33,13 @@ public class ShootMace : MonoBehaviour
         this.character = GameObject.Find("Character").GetComponent<CharacterBehaviour>();
         this.iniPos = this.transform.position;
         this.awakeMoveTarget = this.transform.parent.TransformPoint(this.awakeMoveTarget);
+
+        if (this.isTrace)
+        {
+            this.traceLeftLimitX = this.transform.parent.TransformPoint(new Vector2(this.traceLeftLimitX, 0)).x;
+            this.traceRightLimitX = this.transform.parent.TransformPoint(new Vector2(this.traceRightLimitX, 0)).x;
+        }
+
         this.character.resetMissionEvent += this.resetShootMace;
     }
 
@@ -62,6 +74,34 @@ public class ShootMace : MonoBehaviour
                 else
                 {
                     this.shootLeftTime -= Time.deltaTime;
+                }
+
+                if (this.isTrace)
+                {
+                    int traceDirect = 0;
+                    if (this.character.transform.position.x - this.transform.position.x > 1)
+                    {
+                        traceDirect = 1;
+                    }
+                    else if (this.character.transform.position.x - this.transform.position.x < -1)
+                    {
+                        traceDirect = -1;
+                    }
+
+
+                    var dist = this.traceSpeed * Time.deltaTime * traceDirect;
+                    var nextPointX = this.transform.position.x + dist;
+                    if (nextPointX < this.traceLeftLimitX)
+                    {
+                        nextPointX = this.traceLeftLimitX;
+                    }
+                    else if (nextPointX > this.traceRightLimitX)
+                    {
+                        nextPointX = this.traceRightLimitX;
+                    }
+                    
+                    this.transform.Translate(new Vector2(nextPointX - this.transform.position.x, 0), Space.World);
+
                 }
                 break;
         }

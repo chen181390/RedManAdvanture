@@ -12,7 +12,8 @@ public enum PathBlockBehaviourType
 {
     Motionless,
     DirectByRoute,
-    Drop
+    Drop,
+    TriggerThenDirectByRoute
 }
 
 public class PathBlock : MonoBehaviour
@@ -29,12 +30,14 @@ public class PathBlock : MonoBehaviour
     private Vector2 iniPos;
     private Quaternion iniRot;
     private int routeTarget = 1;
+    private PathBlockBehaviourType iniBehaviourType;
 
     // Start is called before the first frame update
     void Start()
     {
         this.character = GameObject.Find("Character").GetComponent<CharacterBehaviour>();
         this.characterCamera = GameObject.Find("Main Camera").GetComponent<CharacterCamera>();
+        this.iniBehaviourType = this.behaviourType;
 
         switch (this.behaviourType)
         {
@@ -61,9 +64,11 @@ public class PathBlock : MonoBehaviour
 
     private void resetPathBlock()
     {
+        this.behaviourType = this.iniBehaviourType;
         switch(this.behaviourType)
         {
             case PathBlockBehaviourType.DirectByRoute:
+            case PathBlockBehaviourType.TriggerThenDirectByRoute:
                 this.transform.position = this.routePoints[0];
                 this.routeTarget = 1;
                 break;
@@ -124,6 +129,10 @@ public class PathBlock : MonoBehaviour
             {
                 case PathBlockBehaviourType.Drop:
                     this.rigidBody.gravityScale = this.dropGravity;
+                    break;
+
+                case PathBlockBehaviourType.TriggerThenDirectByRoute:
+                    this.behaviourType = PathBlockBehaviourType.DirectByRoute;
                     break;
             }
         }

@@ -24,7 +24,7 @@ public class CharacterCamera : MonoBehaviour
         this.characterCamera.orthographicSize = (float)Screen.height / 100 / 2;
 
         this.startPosLimitX += this.characterCamera.orthographicSize - defaultSize;
-        this.endPosLimitX = this.deathLineRight.transform.position.x - this.characterCamera.orthographicSize;
+        this.endPosLimitX = this.deathLineRight.transform.position.x - (float)Screen.width / 100 / 2;
 
         this.cameraCharacterDistanceX = (0.5f - 0.382f) * this.characterCamera.orthographicSize * 2;
         this.cameraCharacterDistanceY = this.characterCamera.transform.position.y - this.character.transform.position.y;

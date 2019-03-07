@@ -6,3 +6,4 @@ Assembly-CSharp.csproj
 Packages/
 MonoBleedingEdge/
 Logs/
+Assembly-CSharp-Editor.csproj

@@ -4583,6 +4583,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: 7bb93af5468a1944db056a9b960b1c2b,
         type: 3}
+    - target: {fileID: 7348092588478348178, guid: d1558ea915512fe44b330748ee5e0de8,
+        type: 3}
+      propertyPath: behaviourType
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d1558ea915512fe44b330748ee5e0de8, type: 3}
 --- !u!4 &477110239 stripped
@@ -14718,6 +14723,7 @@ MonoBehaviour:
   deathLineType: 3
   touchBlock: {fileID: 1084976909}
   fadeInSpeed: 0.02
+  nextScene: 1
 --- !u!4 &1549345367 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6658924275301200683, guid: d1558ea915512fe44b330748ee5e0de8,
@@ -15294,6 +15300,7 @@ MonoBehaviour:
   deathLineType: 1
   touchBlock: {fileID: 0}
   fadeInSpeed: 0
+  nextScene: 0
 --- !u!1 &1619271821 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6658924275301200686, guid: d1558ea915512fe44b330748ee5e0de8,

@@ -39,4 +39,12 @@ public class AniHashCode
     public static int triggerAttack = Animator.StringToHash("triggerAttack");
     public static int IdleToAttackJump = Animator.StringToHash("Idle -> AttackJump");
     #endregion
+
+    // Main Camera
+    #region 
+    public static int triggerShake = Animator.StringToHash("triggerShake");
+    public static int triggerEndShake = Animator.StringToHash("triggerEndShake");
+    public static int Shake = Animator.StringToHash("Shake");
+    #endregion
+
 }

@@ -14,6 +14,7 @@ public class JumpMace : MonoBehaviour
     private bool isInRange;
     private Animator animator;
     private Quaternion iniRot;
+    private Vector2 attackTargetPos;
 
 
     // Start is called before the first frame update
@@ -32,6 +33,7 @@ public class JumpMace : MonoBehaviour
         this.animator = this.GetComponentInChildren<Animator>();
         this.iniRot = this.transform.rotation;
         this.character.resetMissionEvent += this.resetJumpMace;
+
     }
 
     public void resetJumpMace()
@@ -50,9 +52,12 @@ public class JumpMace : MonoBehaviour
         if (this.isInRange)
         {
             if (status == AniHashCode.Idle && trans != AniHashCode.IdleToAttackJump)
+            {
+                this.attackTargetPos = this.character.transform.position;
                 this.animator.SetTrigger(AniHashCode.triggerAttack);
+            }
 
-            target = this.character.transform.position;
+            target = this.attackTargetPos;
         }
         else
         {

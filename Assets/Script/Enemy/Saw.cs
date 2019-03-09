@@ -18,10 +18,14 @@ public class Saw : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        for(int i = 0 ; i < this.routePoints.Length ; i++)
+        if (this.transform.parent)
         {
-            this.routePoints[i] = this.transform.parent.TransformPoint(this.routePoints[i]);
+            for (int i = 0; i < this.routePoints.Length; i++)
+            {
+                this.routePoints[i] = this.transform.parent.TransformPoint(this.routePoints[i]);
+            }
         }
+
         this.transform.position = this.routePoints[0];
         this.character = GameObject.Find("Character").GetComponent<CharacterBehaviour>();
         this.character.resetMissionEvent += this.resetSaw;

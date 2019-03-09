@@ -33,4 +33,10 @@ public class AniHashCode
     public static int triggerAwake = Animator.StringToHash("triggerAwake");
     public static int triggerSleep = Animator.StringToHash("triggerSleep");
     #endregion
+
+    // jumpMace
+    #region 
+    public static int triggerAttack = Animator.StringToHash("triggerAttack");
+    public static int IdleToAttackJump = Animator.StringToHash("Idle -> AttackJump");
+    #endregion
 }

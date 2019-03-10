@@ -18,6 +18,7 @@ public class UIHomePage : MonoBehaviour,IPointerClickHandler
     private Animator animator;
     public GameObject panel;
     public GameObject btnPause;
+    private bool allowStart;
 
     // Start is called before the first frame update
     void Start()
@@ -44,9 +45,14 @@ public class UIHomePage : MonoBehaviour,IPointerClickHandler
         }
     }
 
+    public void setAllowStart()
+    {
+        this.allowStart = true;
+    }
+
     void IPointerClickHandler.OnPointerClick(PointerEventData eventData)
     {
-        if (this.status == UIHomePageStatus.Unstarted)
+        if (this.allowStart && this.status == UIHomePageStatus.Unstarted)
         {
             this.animator.SetTrigger(AniHashCode.triggerStartGame);
             this.character.onBtnRightDown();

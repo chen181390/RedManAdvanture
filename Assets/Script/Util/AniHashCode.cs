@@ -45,6 +45,11 @@ public class AniHashCode
     public static int triggerShake = Animator.StringToHash("triggerShake");
     public static int triggerEndShake = Animator.StringToHash("triggerEndShake");
     public static int Shake = Animator.StringToHash("Shake");
+    public static int ShakeToIdle = Animator.StringToHash("ShakeToIdle");
     #endregion
+
+    // cloud
+    public static int triggerFloat = Animator.StringToHash("triggerFloat");
+    public static int triggerIdle = Animator.StringToHash("triggerIdle");
 
 }

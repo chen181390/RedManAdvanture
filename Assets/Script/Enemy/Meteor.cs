@@ -22,6 +22,13 @@ public class Meteor : MonoBehaviour
 
     public void resetMeteor()
     {
+        if (this.cameraAnim.GetCurrentAnimatorStateInfo(0).shortNameHash == AniHashCode.Shake && 
+        this.cameraAnim.GetAnimatorTransitionInfo(0).nameHash != AniHashCode.ShakeToIdle) {
+            this.cameraAnim.SetBool(AniHashCode.triggerEndShake, false);
+            this.cameraAnim.SetBool(AniHashCode.triggerShake, false);
+            this.cameraAnim.SetTrigger(AniHashCode.triggerEndShake);
+        }
+        this.character.resetMissionEvent -= resetMeteor;
         Destroy(this.gameObject);
     }
 
@@ -33,6 +40,7 @@ public class Meteor : MonoBehaviour
             this.isShootMeteor = false;
             var direct = (this.target - this.transform.position).normalized;
             this.rigidBody.AddForce(direct * this.impulse, ForceMode2D.Impulse);
+            this.cameraAnim.SetBool(AniHashCode.triggerEndShake, false);
             this.cameraAnim.SetTrigger(AniHashCode.triggerShake);
         }
     }

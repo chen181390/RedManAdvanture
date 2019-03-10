@@ -67,6 +67,7 @@ MonoBehaviour:
   - {x: -3.46, y: 2.58}
   - {x: -3.46, y: -1.54}
   - {x: 0.78, y: -1.54}
+  isTurnWorld: 1
   sawType: 0
   speed: 1
 --- !u!212 &4416777512517644361

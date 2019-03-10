@@ -1686,7 +1686,7 @@ PrefabInstance:
     - target: {fileID: 7348092588478348178, guid: d1558ea915512fe44b330748ee5e0de8,
         type: 3}
       propertyPath: meteorImpulse
-      value: 50000
+      value: 40000
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d1558ea915512fe44b330748ee5e0de8, type: 3}
@@ -1862,7 +1862,7 @@ PrefabInstance:
     - target: {fileID: 7348092588478348178, guid: d1558ea915512fe44b330748ee5e0de8,
         type: 3}
       propertyPath: meteorImpulse
-      value: 50000
+      value: 40000
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d1558ea915512fe44b330748ee5e0de8, type: 3}
@@ -2822,7 +2822,6 @@ Transform:
   - {fileID: 1238014916}
   - {fileID: 308865613}
   - {fileID: 871883022}
-  - {fileID: 2017592634}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2929,7 +2928,7 @@ PrefabInstance:
     - target: {fileID: 5154946869773485069, guid: c4583ba356af1f24faed5285106a75fa,
         type: 3}
       propertyPath: m_Name
-      value: MeteorCloud (2)
+      value: Cloud (4)
       objectReference: {fileID: 0}
     - target: {fileID: 5154946869773485069, guid: c4583ba356af1f24faed5285106a75fa,
         type: 3}
@@ -3039,7 +3038,7 @@ PrefabInstance:
     - target: {fileID: 5154946869773485067, guid: c4583ba356af1f24faed5285106a75fa,
         type: 3}
       propertyPath: meteorImpulse
-      value: 20000
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c4583ba356af1f24faed5285106a75fa, type: 3}
@@ -3781,7 +3780,7 @@ PrefabInstance:
     - target: {fileID: 7348092588478348178, guid: d1558ea915512fe44b330748ee5e0de8,
         type: 3}
       propertyPath: meteorImpulse
-      value: 50000
+      value: 40000
       objectReference: {fileID: 0}
     - target: {fileID: 7348092588478348178, guid: d1558ea915512fe44b330748ee5e0de8,
         type: 3}
@@ -5097,7 +5096,7 @@ PrefabInstance:
     - target: {fileID: 1362277686978887382, guid: 0d1193d45bf6c1340ab39c0c1497d882,
         type: 3}
       propertyPath: m_Offset.x
-      value: 8.0179825
+      value: 10.741208
       objectReference: {fileID: 0}
     - target: {fileID: 1362277686978887382, guid: 0d1193d45bf6c1340ab39c0c1497d882,
         type: 3}
@@ -5107,7 +5106,7 @@ PrefabInstance:
     - target: {fileID: 1362277686978887382, guid: 0d1193d45bf6c1340ab39c0c1497d882,
         type: 3}
       propertyPath: m_Size.x
-      value: 21.139137
+      value: 26.585588
       objectReference: {fileID: 0}
     - target: {fileID: 1362277686978887382, guid: 0d1193d45bf6c1340ab39c0c1497d882,
         type: 3}
@@ -5438,7 +5437,7 @@ PrefabInstance:
     - target: {fileID: 5154946869773485067, guid: c4583ba356af1f24faed5285106a75fa,
         type: 3}
       propertyPath: moveSpeed
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c4583ba356af1f24faed5285106a75fa, type: 3}
@@ -5622,7 +5621,7 @@ PrefabInstance:
     - target: {fileID: 7348092588478348178, guid: d1558ea915512fe44b330748ee5e0de8,
         type: 3}
       propertyPath: meteorImpulse
-      value: 50000
+      value: 40000
       objectReference: {fileID: 0}
     - target: {fileID: 7348092588478348178, guid: d1558ea915512fe44b330748ee5e0de8,
         type: 3}
@@ -8476,7 +8475,7 @@ PrefabInstance:
     - target: {fileID: 5154946869773485066, guid: c4583ba356af1f24faed5285106a75fa,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 82.71
+      value: 85.67
       objectReference: {fileID: 0}
     - target: {fileID: 5154946869773485066, guid: c4583ba356af1f24faed5285106a75fa,
         type: 3}
@@ -8541,7 +8540,7 @@ PrefabInstance:
     - target: {fileID: 5154946869773485067, guid: c4583ba356af1f24faed5285106a75fa,
         type: 3}
       propertyPath: routePoints.Array.data[0].x
-      value: 82.71
+      value: 85.67
       objectReference: {fileID: 0}
     - target: {fileID: 5154946869773485067, guid: c4583ba356af1f24faed5285106a75fa,
         type: 3}
@@ -8789,7 +8788,7 @@ PrefabInstance:
     - target: {fileID: 7348092588478348178, guid: d1558ea915512fe44b330748ee5e0de8,
         type: 3}
       propertyPath: meteorImpulse
-      value: 50000
+      value: 40000
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d1558ea915512fe44b330748ee5e0de8, type: 3}
@@ -8951,9 +8950,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   deathLineType: 3
-  touchBlock: {fileID: 1167133831}
+  touchBlock: {fileID: 0}
   fadeInSpeed: 0.02
-  nextScene: 2
+  nextScene: 0
 --- !u!1 &1568414230
 GameObject:
   m_ObjectHideFlags: 0
@@ -9531,7 +9530,7 @@ PrefabInstance:
     - target: {fileID: 7348092588478348178, guid: d1558ea915512fe44b330748ee5e0de8,
         type: 3}
       propertyPath: meteorImpulse
-      value: 50000
+      value: 40000
       objectReference: {fileID: 0}
     - target: {fileID: 7348092588478348178, guid: d1558ea915512fe44b330748ee5e0de8,
         type: 3}
@@ -9832,7 +9831,7 @@ PrefabInstance:
     - target: {fileID: 7348092588478348178, guid: d1558ea915512fe44b330748ee5e0de8,
         type: 3}
       propertyPath: meteorImpulse
-      value: 50000
+      value: 40000
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d1558ea915512fe44b330748ee5e0de8, type: 3}
@@ -10163,7 +10162,7 @@ PrefabInstance:
     - target: {fileID: 5154946869773485067, guid: c4583ba356af1f24faed5285106a75fa,
         type: 3}
       propertyPath: moveSpeed
-      value: 2.5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5154946870521922820, guid: c4583ba356af1f24faed5285106a75fa,
         type: 3}
@@ -10833,113 +10832,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6658924275301200683, guid: d1558ea915512fe44b330748ee5e0de8,
     type: 3}
   m_PrefabInstance: {fileID: 1199166552}
-  m_PrefabAsset: {fileID: 0}
---- !u!1001 &2017592633
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 513256302}
-    m_Modifications:
-    - target: {fileID: 6658924275301200686, guid: d1558ea915512fe44b330748ee5e0de8,
-        type: 3}
-      propertyPath: m_Name
-      value: PathBlock (77)
-      objectReference: {fileID: 0}
-    - target: {fileID: 6658924275301200683, guid: d1558ea915512fe44b330748ee5e0de8,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 267.98
-      objectReference: {fileID: 0}
-    - target: {fileID: 6658924275301200683, guid: d1558ea915512fe44b330748ee5e0de8,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -3
-      objectReference: {fileID: 0}
-    - target: {fileID: 6658924275301200683, guid: d1558ea915512fe44b330748ee5e0de8,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6658924275301200683, guid: d1558ea915512fe44b330748ee5e0de8,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6658924275301200683, guid: d1558ea915512fe44b330748ee5e0de8,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6658924275301200683, guid: d1558ea915512fe44b330748ee5e0de8,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6658924275301200683, guid: d1558ea915512fe44b330748ee5e0de8,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6658924275301200683, guid: d1558ea915512fe44b330748ee5e0de8,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 94
-      objectReference: {fileID: 0}
-    - target: {fileID: 6658924275301200683, guid: d1558ea915512fe44b330748ee5e0de8,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6658924275301200683, guid: d1558ea915512fe44b330748ee5e0de8,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6658924275301200683, guid: d1558ea915512fe44b330748ee5e0de8,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6658924275301200680, guid: d1558ea915512fe44b330748ee5e0de8,
-        type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 1f868e6475c4bfc458014ab7ee228e86,
-        type: 3}
-    - target: {fileID: 7348092588478348178, guid: d1558ea915512fe44b330748ee5e0de8,
-        type: 3}
-      propertyPath: behaviourType
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7348092588478348178, guid: d1558ea915512fe44b330748ee5e0de8,
-        type: 3}
-      propertyPath: meteorImpulse
-      value: 20000
-      objectReference: {fileID: 0}
-    - target: {fileID: 7348092588478348178, guid: d1558ea915512fe44b330748ee5e0de8,
-        type: 3}
-      propertyPath: meteorPrefab
-      value: 
-      objectReference: {fileID: 5216113747136925258, guid: 0596943acd8b1a0408c5ea1c07011bac,
-        type: 3}
-    - target: {fileID: 7348092588478348178, guid: d1558ea915512fe44b330748ee5e0de8,
-        type: 3}
-      propertyPath: meteorPos.x
-      value: 231.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 7348092588478348178, guid: d1558ea915512fe44b330748ee5e0de8,
-        type: 3}
-      propertyPath: meteorPos.y
-      value: 54.6
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: d1558ea915512fe44b330748ee5e0de8, type: 3}
---- !u!4 &2017592634 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6658924275301200683, guid: d1558ea915512fe44b330748ee5e0de8,
-    type: 3}
-  m_PrefabInstance: {fileID: 2017592633}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2041496838
 PrefabInstance:

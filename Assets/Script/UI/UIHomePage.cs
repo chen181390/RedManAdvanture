@@ -17,6 +17,7 @@ public class UIHomePage : MonoBehaviour,IPointerClickHandler
     public GameObject deathLineLeft;
     private Animator animator;
     public GameObject panel;
+    public GameObject btnPause;
 
     // Start is called before the first frame update
     void Start()
@@ -38,6 +39,7 @@ public class UIHomePage : MonoBehaviour,IPointerClickHandler
                 this.deathLineLeft.SetActive(true);
                 this.panel.SetActive(false);
                 this.character.setCharacterIniPos(this.character.transform.position);
+                this.btnPause.SetActive(true);
             }
         }
     }

@@ -38,9 +38,13 @@ public class JumpMace : MonoBehaviour
 
     public void resetJumpMace()
     {
+        var rigidBody = this.GetComponent<Rigidbody2D>();
+        rigidBody.velocity = Vector2.zero;
+        rigidBody.angularVelocity = 0;
         this.transform.position = this.routePoints[0];
         this.transform.rotation = this.iniRot;
         this.routeTarget = 1;
+        this.gameObject.SetActive(true);
     }
 
     // Update is called once per frame
@@ -53,7 +57,7 @@ public class JumpMace : MonoBehaviour
         {
             if (status == AniHashCode.Idle && trans != AniHashCode.IdleToAttackJump)
             {
-                this.attackTargetPos = this.character.transform.position;
+                this.attackTargetPos = new Vector2(this.character.transform.position.x, this.routePoints[0].y);
                 this.animator.SetTrigger(AniHashCode.triggerAttack);
             }
 
@@ -119,11 +123,6 @@ public class JumpMace : MonoBehaviour
         {
             this.isInRange = false;
             this.moveSpeed = this.iniMoveSpeed;
-
-            if ((this.character.transform.position.x - this.transform.position.x) * (this.routePoints[this.routeTarget].x - this.transform.position.x) < 0)
-            {
-                this.transform.Rotate(new Vector3(0, 180, 0));
-            }
         }
     }
 
@@ -132,6 +131,10 @@ public class JumpMace : MonoBehaviour
         if (collision.transform.name == "Character")
         {
             this.character.setCharacterDead();
+        }
+        else if (collision.transform.name == "DeathLineBottom")
+        {
+            this.gameObject.SetActive(false);
         }
     }
 }

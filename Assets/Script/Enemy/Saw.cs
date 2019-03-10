@@ -48,7 +48,7 @@ public class Saw : MonoBehaviour
                 var nextPos = (Vector2)this.transform.position + delta;
                 var nextDirect = (this.routePoints[routeTarget] - nextPos).normalized;
                 // 到达目标点
-                if (nextDirect != direct)
+                if (nextDirect != direct || nextDirect == Vector2.zero)
                 {
                     this.transform.Translate(this.routePoints[routeTarget] - (Vector2)this.transform.position, Space.World);
                     if (this.routeTarget == this.routePoints.Length - 1)

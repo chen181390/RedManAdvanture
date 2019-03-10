@@ -13,6 +13,9 @@ public class PathBlockInspectorEditor : Editor
     private SerializedProperty routePoints;
     private SerializedProperty moveSpeed;
     private SerializedProperty dropGravity;
+    private SerializedProperty meteorPrefab;
+    private SerializedProperty meteorPos;
+    private SerializedProperty meteorImpulse;
 
     void OnEnable()
     {
@@ -22,6 +25,9 @@ public class PathBlockInspectorEditor : Editor
        this.routePoints = this.pathBlock.FindProperty("routePoints");
        this.moveSpeed = this.pathBlock.FindProperty("moveSpeed");
        this.dropGravity = this.pathBlock.FindProperty("dropGravity");
+       this.meteorPrefab = this.pathBlock.FindProperty("meteorPrefab");
+       this.meteorPos = this.pathBlock.FindProperty("meteorPos");
+       this.meteorImpulse = this.pathBlock.FindProperty("meteorImpulse");
     }
 
     public override void OnInspectorGUI()
@@ -34,12 +40,18 @@ public class PathBlockInspectorEditor : Editor
         {
             case PathBlockBehaviourType.DirectByRoute:
             case PathBlockBehaviourType.TriggerThenDirectByRoute:
-                EditorGUILayout.PropertyField(this.routePoints);
+                EditorGUILayout.PropertyField(this.routePoints, true);
                 EditorGUILayout.PropertyField(this.moveSpeed);
                 break;
 
             case PathBlockBehaviourType.Drop:
                 EditorGUILayout.PropertyField(this.dropGravity);
+                break;
+
+            case PathBlockBehaviourType.CallMeteor:
+                EditorGUILayout.PropertyField(this.meteorPrefab);
+                EditorGUILayout.PropertyField(this.meteorPos);
+                EditorGUILayout.PropertyField(this.meteorImpulse);
                 break;
         }
 

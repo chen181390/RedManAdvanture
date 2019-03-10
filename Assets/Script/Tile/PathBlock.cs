@@ -5,7 +5,7 @@ public enum PathBlockType
 {
     FlatPath,
     LeftHillPath,
-    RightHillPath
+    RightHillPath,
 }
 
 public enum PathBlockBehaviourType
@@ -13,7 +13,8 @@ public enum PathBlockBehaviourType
     Motionless,
     DirectByRoute,
     Drop,
-    TriggerThenDirectByRoute
+    TriggerThenDirectByRoute,
+    CallMeteor
 }
 
 public class PathBlock : MonoBehaviour
@@ -23,6 +24,9 @@ public class PathBlock : MonoBehaviour
     public Vector2[] routePoints;
     public float moveSpeed;
     public float dropGravity;
+    public GameObject meteorPrefab;
+    public Vector2 meteorPos;
+    public float meteorImpulse;
 
     private CharacterBehaviour character;
     private CharacterCamera characterCamera;
@@ -31,6 +35,7 @@ public class PathBlock : MonoBehaviour
     private Quaternion iniRot;
     private int routeTarget = 1;
     private PathBlockBehaviourType iniBehaviourType;
+    private bool isMeteor;
 
     // Start is called before the first frame update
     void Start()
@@ -47,7 +52,6 @@ public class PathBlock : MonoBehaviour
                     this.routePoints[i] = this.transform.parent.TransformPoint(this.routePoints[i]);
                 }
                 this.transform.position = this.routePoints[0];
-                this.character.resetMissionEvent += this.resetPathBlock;
                 break;
 
             case PathBlockBehaviourType.Drop:
@@ -55,22 +59,20 @@ public class PathBlock : MonoBehaviour
                 this.rigidBody.gravityScale = 0;
                 this.iniPos = this.transform.position;
                 this.iniRot = this.transform.rotation;
-                this.character.resetMissionEvent += this.resetPathBlock;
                 break;
 
             case PathBlockBehaviourType.TriggerThenDirectByRoute:
                 this.iniPos = this.transform.position;
                 this.iniRot = this.transform.rotation;
-                this.character.resetMissionEvent += this.resetPathBlock;
                 break;
-
         }
+        this.character.resetMissionEvent += this.resetPathBlock;
     }
 
     private void resetPathBlock()
     {
         this.behaviourType = this.iniBehaviourType;
-        switch(this.behaviourType)
+        switch (this.behaviourType)
         {
             case PathBlockBehaviourType.DirectByRoute:
             case PathBlockBehaviourType.TriggerThenDirectByRoute:
@@ -86,10 +88,14 @@ public class PathBlock : MonoBehaviour
                 this.transform.rotation = this.iniRot;
                 this.gameObject.SetActive(true);
                 break;
+
+            case PathBlockBehaviourType.CallMeteor:
+                this.isMeteor = false;
+                break;
         }
     }
 
-    
+
 
     // Update is called once per frame
     void Update()
@@ -102,7 +108,7 @@ public class PathBlock : MonoBehaviour
                 var nextPos = (Vector2)this.transform.position + delta;
                 var nextDirect = (this.routePoints[routeTarget] - nextPos).normalized;
                 // 到达目标点
-                if (nextDirect != direct)
+                if (nextDirect != direct || nextDirect == Vector2.zero)
                 {
                     this.transform.Translate(this.routePoints[routeTarget] - (Vector2)this.transform.position, Space.World);
                     if (this.routeTarget == this.routePoints.Length - 1)
@@ -139,6 +145,19 @@ public class PathBlock : MonoBehaviour
                 case PathBlockBehaviourType.TriggerThenDirectByRoute:
                     this.behaviourType = PathBlockBehaviourType.DirectByRoute;
                     break;
+
+                case PathBlockBehaviourType.CallMeteor:
+                    if (!this.isMeteor)
+                    {
+                        var meteor = Instantiate(this.meteorPrefab, this.meteorPos, Quaternion.Euler(0, 0, 0));
+                        Meteor meteorScript = meteor.GetComponent<Meteor>();
+                        meteorScript.target = this.character.transform.position;
+                        meteorScript.impulse = this.meteorImpulse;
+                        meteorScript.isShootMeteor = true;
+                        this.isMeteor = true;
+                    }
+                    break;
+
             }
         }
         else if (collision.transform.name == "DeathLineBottom")

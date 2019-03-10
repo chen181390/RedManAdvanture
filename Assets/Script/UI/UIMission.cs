@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 
 public class UIMission : MonoBehaviour
 {
+    public bool isHomePage;
     public Image touchBlock;
     [Tooltip("进入关卡黑色淡出的速度（每帧")]
     public float fadeOutSpeed;
@@ -18,8 +19,11 @@ public class UIMission : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        this.touchBlock.color = Color.black;
-        this.gameController.SetActive(false);
+        if (!this.isHomePage)
+        {
+            this.touchBlock.color = Color.black;
+            this.gameController.SetActive(false);
+        }
         this.btnPause.gameObject.SetActive(false);
         this.registerBtnPauseGame();
     }
@@ -50,16 +54,16 @@ public class UIMission : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!this.isFadeOutOver)
+        if (!this.isHomePage && !this.isFadeOutOver)
         {
             if (this.touchBlock.color.a - this.fadeOutSpeed <= 0)
             {
-                this.touchBlock.color = new Color(this.touchBlock.color.r, this.touchBlock.color.g, 
+                this.touchBlock.color = new Color(this.touchBlock.color.r, this.touchBlock.color.g,
                 this.touchBlock.color.b, 0);
             }
             else
             {
-                this.touchBlock.color = new Color(this.touchBlock.color.r, this.touchBlock.color.g, 
+                this.touchBlock.color = new Color(this.touchBlock.color.r, this.touchBlock.color.g,
                 this.touchBlock.color.b, this.touchBlock.color.a - this.fadeOutSpeed);
             }
 

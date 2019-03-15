@@ -6,8 +6,8 @@ using UnityEngine.EventSystems;
 public class CharacterBehaviour : MonoBehaviour
 {
     private bool isGround = true;
-    private Vector3 characterIniPos;
-    private Quaternion characterIniRot;
+    public Vector3 characterIniPos {set;get;}
+    public Quaternion characterIniRot {set;get;}
     private bool isRun = false;
     private bool isJump = false;
     private Animator animator;
@@ -24,7 +24,7 @@ public class CharacterBehaviour : MonoBehaviour
     private List<CharacterFrameData> shadowFrameDatas = new List<CharacterFrameData>();
     private CharacterFrameData shadowFrameData = new CharacterFrameData();
 
-
+    public bool isCollectFrameData = true;
     public float flatRunForce = 8;
     public float upHillRunForce = 10;
     public float downHillRunForce = 8;
@@ -49,10 +49,12 @@ public class CharacterBehaviour : MonoBehaviour
         this.animator = GetComponent<Animator>();
         this.rigidBody = GetComponent<Rigidbody2D>();
         this.characterShadow = GameObject.Find("CharacterShadow").GetComponent<CharacterShadow>();
+        this.characterShadow.gameObject.SetActive(false);
         this.characterIniPos = this.transform.position;
         this.characterIniRot = this.transform.rotation;
         this.jumpLeftSeg = this.jumpMaxSeg;
         this.registerTrigger();
+        References.character = this;
     }
 
     public void setCharacterIniPos(Vector3 iniPos)
@@ -301,20 +303,16 @@ public class CharacterBehaviour : MonoBehaviour
 
         // 给动画状态机参数赋值
         this.animator.SetBool(AniHashCode.isBtnRun, this.isRun);
-        this.shadowFrameData.isRun = this.isRun;
         this.animator.SetBool(AniHashCode.isBtnJump, this.isJump);
-        this.shadowFrameData.isJump = this.isJump;
         this.animator.SetFloat(AniHashCode.horSpeed, System.Math.Abs(this.rigidBody.velocity.x));
-        this.shadowFrameData.horSpeed = System.Math.Abs(this.rigidBody.velocity.x);
 
         RaycastHit2D hit2D = Physics2D.Raycast(this.transform.position, Vector2.down, 50, 511);
         if (hit2D.collider)
         {
             this.animator.SetFloat(AniHashCode.vecHeight, hit2D.distance);
-            this.shadowFrameData.vecHight = hit2D.distance;
             this.isGround = hit2D.distance <= 1.3 ? true : false;
             this.animator.SetBool(AniHashCode.isGround, this.isGround);
-            this.shadowFrameData.isGround = this.isGround;
+
         }
         else
         {
@@ -324,11 +322,18 @@ public class CharacterBehaviour : MonoBehaviour
             this.shadowFrameData.isGround = false;
         }
 
-        this.shadowFrameData.pos = this.transform.position;
-        this.shadowFrameData.rot = this.transform.rotation;
-
-        this.shadowFrameDatas.Add(this.shadowFrameData);
-        this.shadowFrameData = new CharacterFrameData();
+        if (this.isCollectFrameData)
+        {
+            this.shadowFrameData.velocity = this.rigidBody.velocity;
+            this.shadowFrameData.angularVelocity = this.rigidBody.angularVelocity;
+            this.shadowFrameData.isRun = this.isRun;
+            this.shadowFrameData.isJump = this.isJump;
+            this.shadowFrameData.horSpeed = System.Math.Abs(this.rigidBody.velocity.x);
+            this.shadowFrameData.vecHight = hit2D.distance;
+            this.shadowFrameData.isGround = this.isGround;
+            this.shadowFrameDatas.Add(this.shadowFrameData);
+            this.shadowFrameData = new CharacterFrameData();
+        }
     }
 
     public void setCharacterDead()
@@ -346,6 +351,12 @@ public class CharacterBehaviour : MonoBehaviour
         this.isJump = false;
 
         this.shadowFrameData.triggerDead = true;
+        this.shadowFrameData.velocity = Vector2.zero;
+        this.shadowFrameDatas.Add(this.shadowFrameData);
+        this.characterShadow.setCharacterFrameDatas(this.shadowFrameDatas.ToArray());
+        this.shadowFrameDatas = new List<CharacterFrameData>();
+        this.shadowFrameData = new CharacterFrameData();
+        this.isCollectFrameData = false;
     }
 
     public void resetMission()
@@ -363,9 +374,7 @@ public class CharacterBehaviour : MonoBehaviour
 
         this.resetMissionEvent();
         this.isDeading = false;
-
-        this.characterShadow.setCharacterFrameDatas(this.shadowFrameDatas.ToArray());
-        this.shadowFrameDatas = new List<CharacterFrameData>();
+        this.isCollectFrameData = true;
     }
 
     void OnCollisionEnter2D(Collision2D collision)

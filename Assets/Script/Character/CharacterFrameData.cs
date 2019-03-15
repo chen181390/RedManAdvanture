@@ -5,7 +5,9 @@ using UnityEngine;
 public class CharacterFrameData
 {
     public Vector3 pos;
-    public Quaternion rot;
+    public Vector2 velocity;
+    public float angularVelocity;
+
     // 动画状态机相关
     public bool isRun;
     public bool isJump;

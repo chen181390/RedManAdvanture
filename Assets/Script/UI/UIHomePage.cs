@@ -24,6 +24,7 @@ public class UIHomePage : MonoBehaviour,IPointerClickHandler
     void Start()
     {
         this.animator = this.GetComponent<Animator>();
+        this.character.isCollectFrameData = false;
     }
 
     // Update is called once per frame
@@ -41,6 +42,7 @@ public class UIHomePage : MonoBehaviour,IPointerClickHandler
                 this.panel.SetActive(false);
                 this.character.setCharacterIniPos(this.character.transform.position);
                 this.btnPause.SetActive(true);
+                this.character.isCollectFrameData = true;
             }
         }
     }

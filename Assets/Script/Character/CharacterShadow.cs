@@ -8,6 +8,8 @@ public class CharacterShadow : MonoBehaviour
     private CharacterFrameData[] frameDatas;
     private int playIndex = 0;
     private Animator animator;
+    private Rigidbody2D rigidBody;
+
 
     public void setCharacterFrameDatas(CharacterFrameData[] frameDatas)
     {
@@ -18,9 +20,11 @@ public class CharacterShadow : MonoBehaviour
     void Start()
     {
         this.character = GameObject.Find("Character").GetComponent<CharacterBehaviour>() as CharacterBehaviour;
-       this.animator = this.GetComponent<Animator>();
-       this.character.resetMissionEvent += this.resetShadow;
-    //    this.gameObject.SetActive(false);
+        this.animator = this.GetComponent<Animator>();
+        this.rigidBody = this.GetComponent<Rigidbody2D>();
+        this.transform.position = this.character.characterIniPos;
+        this.transform.rotation = this.character.characterIniRot;
+        this.character.resetMissionEvent += this.resetShadow;
     }
 
     void resetMission()
@@ -29,29 +33,24 @@ public class CharacterShadow : MonoBehaviour
 
     void resetShadow()
     {
+        this.gameObject.SetActive(true);
         this.playIndex = 0;
         this.animator.CrossFade(AniHashCode.Idle, 0, 0, 0, 0);
+        this.transform.position = this.character.characterIniPos;
+        this.transform.rotation = this.character.characterIniRot;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (this.frameDatas == null)
+        if (this.frameDatas == null || this.playIndex >= this.frameDatas.Length)
             return;
 
-        if (this.playIndex >= this.frameDatas.Length)
-        {
-            this.frameDatas = null;
-            this.playIndex = 0;
-            return;
-        }
-    
         var frameData = this.frameDatas[this.playIndex];
 
-        this.gameObject.SetActive(true);
-
         // 播放移动旋转
-        this.transform.SetPositionAndRotation(frameData.pos, frameData.rot);
+        this.rigidBody.velocity = frameData.velocity;
+        this.rigidBody.angularVelocity = frameData.angularVelocity;
 
         this.animator.SetBool(AniHashCode.isBtnRun, frameData.isRun);
         this.animator.SetBool(AniHashCode.isBtnJump, frameData.isJump);
@@ -61,12 +60,8 @@ public class CharacterShadow : MonoBehaviour
         if (frameData.triggerDead)
         {
             this.animator.SetTrigger(AniHashCode.triggerDead);
-            this.playIndex = 0;
         }
-        else
-        {
-            this.playIndex++;
-        }
+        this.playIndex++;
 
     }
 }

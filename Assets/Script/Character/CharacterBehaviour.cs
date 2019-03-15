@@ -20,6 +20,9 @@ public class CharacterBehaviour : MonoBehaviour
     private bool isDeading = false;
     public PathBlockType pathType;
     private CharacterCamera characterCamera;
+    private CharacterShadow characterShadow;
+    private List<CharacterFrameData> shadowFrameDatas = new List<CharacterFrameData>();
+    private CharacterFrameData shadowFrameData = new CharacterFrameData();
 
 
     public float flatRunForce = 8;
@@ -45,6 +48,7 @@ public class CharacterBehaviour : MonoBehaviour
         this.characterCamera = GameObject.Find("Main Camera").GetComponent<CharacterCamera>();
         this.animator = GetComponent<Animator>();
         this.rigidBody = GetComponent<Rigidbody2D>();
+        this.characterShadow = GameObject.Find("CharacterShadow").GetComponent<CharacterShadow>();
         this.characterIniPos = this.transform.position;
         this.characterIniRot = this.transform.rotation;
         this.jumpLeftSeg = this.jumpMaxSeg;
@@ -297,25 +301,34 @@ public class CharacterBehaviour : MonoBehaviour
 
         // 给动画状态机参数赋值
         this.animator.SetBool(AniHashCode.isBtnRun, this.isRun);
+        this.shadowFrameData.isRun = this.isRun;
         this.animator.SetBool(AniHashCode.isBtnJump, this.isJump);
+        this.shadowFrameData.isJump = this.isJump;
         this.animator.SetFloat(AniHashCode.horSpeed, System.Math.Abs(this.rigidBody.velocity.x));
+        this.shadowFrameData.horSpeed = System.Math.Abs(this.rigidBody.velocity.x);
 
         RaycastHit2D hit2D = Physics2D.Raycast(this.transform.position, Vector2.down, 50, 511);
         if (hit2D.collider)
         {
             this.animator.SetFloat(AniHashCode.vecHeight, hit2D.distance);
-            if (hit2D.distance <= 1.3)
-            {
-                this.isGround = true;
-            }
-            else
-            {
-                this.isGround = false;
-            }
+            this.shadowFrameData.vecHight = hit2D.distance;
+            this.isGround = hit2D.distance <= 1.3 ? true : false;
             this.animator.SetBool(AniHashCode.isGround, this.isGround);
+            this.shadowFrameData.isGround = this.isGround;
+        }
+        else
+        {
+            this.animator.SetFloat(AniHashCode.vecHeight, 10000);
+            this.shadowFrameData.vecHight = 10000;
+            this.animator.SetBool(AniHashCode.isGround, false);
+            this.shadowFrameData.isGround = false;
         }
 
+        this.shadowFrameData.pos = this.transform.position;
+        this.shadowFrameData.rot = this.transform.rotation;
 
+        this.shadowFrameDatas.Add(this.shadowFrameData);
+        this.shadowFrameData = new CharacterFrameData();
     }
 
     public void setCharacterDead()
@@ -331,6 +344,8 @@ public class CharacterBehaviour : MonoBehaviour
         this.rigidBody.angularVelocity = 0;
         this.isRun = false;
         this.isJump = false;
+
+        this.shadowFrameData.triggerDead = true;
     }
 
     public void resetMission()
@@ -348,6 +363,9 @@ public class CharacterBehaviour : MonoBehaviour
 
         this.resetMissionEvent();
         this.isDeading = false;
+
+        this.characterShadow.setCharacterFrameDatas(this.shadowFrameDatas.ToArray());
+        this.shadowFrameDatas = new List<CharacterFrameData>();
     }
 
     void OnCollisionEnter2D(Collision2D collision)

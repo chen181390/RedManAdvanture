@@ -23,6 +23,7 @@ public class CharacterBehaviour : MonoBehaviour
     private CharacterShadow characterShadow;
     private List<CharacterFrameData> shadowFrameDatas = new List<CharacterFrameData>();
     private CharacterFrameData shadowFrameData = new CharacterFrameData();
+    private readonly int frameDataMaxSize = 36000;
 
     public bool isCollectFrameData = true;
     public float flatRunForce = 8;
@@ -333,6 +334,10 @@ public class CharacterBehaviour : MonoBehaviour
             this.shadowFrameData.isGround = this.isGround;
             this.shadowFrameDatas.Add(this.shadowFrameData);
             this.shadowFrameData = new CharacterFrameData();
+            if (this.shadowFrameDatas.Count >= this.frameDataMaxSize)
+            {
+                this.isCollectFrameData = false;
+            }
         }
     }
 

@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class CharacterFrameData
 {
-    public Vector3 pos;
     public Vector2 velocity;
     public float angularVelocity;
 
@@ -15,4 +14,5 @@ public class CharacterFrameData
     public float vecHight;
     public bool  isGround;
     public bool triggerDead;
+    
 }

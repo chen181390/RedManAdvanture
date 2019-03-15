@@ -94,6 +94,7 @@ public class UIMission : MonoBehaviour
             Time.timeScale = 0;
             this.touchBlock.color = new Color(this.touchBlock.color.r, this.touchBlock.color.g, this.touchBlock.color.b, 0.5f);
             this.touchBlock.gameObject.SetActive(true);
+            References.character.isCollectFrameData = false;
         }
         else if (this.btnPause.sprite == this.btnPauseImgs[3])
         {
@@ -101,6 +102,7 @@ public class UIMission : MonoBehaviour
             Time.timeScale = 1;
             this.touchBlock.color = new Color(this.touchBlock.color.r, this.touchBlock.color.g, this.touchBlock.color.b, 0);
             this.touchBlock.gameObject.SetActive(false);
+            References.character.isCollectFrameData = true;
         }
     }
 

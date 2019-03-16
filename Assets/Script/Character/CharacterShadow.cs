@@ -10,25 +10,26 @@ public class CharacterShadow : MonoBehaviour
     private Animator animator;
     private Rigidbody2D rigidBody;
 
-
-    public void setCharacterFrameDatas(CharacterFrameData[] frameDatas)
+    CharacterShadow() : base()
     {
-        this.frameDatas = frameDatas;
+        References.characterShadow = this;
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        this.character = GameObject.Find("Character").GetComponent<CharacterBehaviour>() as CharacterBehaviour;
+        this.character = References.character;
         this.animator = this.GetComponent<Animator>();
         this.rigidBody = this.GetComponent<Rigidbody2D>();
         this.transform.position = this.character.characterIniPos;
         this.transform.rotation = this.character.characterIniRot;
         this.character.resetMissionEvent += this.resetShadow;
+        this.gameObject.SetActive(false);
     }
 
-    void resetMission()
+    public void setCharacterFrameDatas(CharacterFrameData[] frameDatas)
     {
+        this.frameDatas = frameDatas;
     }
 
     void resetShadow()
@@ -64,4 +65,7 @@ public class CharacterShadow : MonoBehaviour
         this.playIndex++;
 
     }
+
+    void resetMission() { }
+
 }

@@ -39,8 +39,11 @@ public class CharacterBehaviour : MonoBehaviour
     public delegate void ResetMissionDelegate();
     public event ResetMissionDelegate resetMissionEvent;
 
-
-
+    
+    CharacterBehaviour(): base()
+    {
+        References.character = this;
+    }
 
 
     // Start is called before the first frame update
@@ -49,8 +52,7 @@ public class CharacterBehaviour : MonoBehaviour
         this.characterCamera = GameObject.Find("Main Camera").GetComponent<CharacterCamera>();
         this.animator = GetComponent<Animator>();
         this.rigidBody = GetComponent<Rigidbody2D>();
-        this.characterShadow = GameObject.Find("CharacterShadow").GetComponent<CharacterShadow>();
-        this.characterShadow.gameObject.SetActive(false);
+        this.characterShadow = References.characterShadow;
         this.characterIniPos = this.transform.position;
         this.characterIniRot = this.transform.rotation;
         this.jumpLeftSeg = this.jumpMaxSeg;
@@ -347,6 +349,7 @@ public class CharacterBehaviour : MonoBehaviour
         {
             return;
         }
+        Handheld.Vibrate();
         this.rigidBody.AddForce(Vector2.up * 20, ForceMode2D.Impulse);
         this.isDeading = true;
         this.animator.SetTrigger(AniHashCode.triggerDead);

@@ -5,4 +5,5 @@ using UnityEngine;
 public class References
 {
     public static CharacterBehaviour character;
+    public static CharacterShadow characterShadow;
 }

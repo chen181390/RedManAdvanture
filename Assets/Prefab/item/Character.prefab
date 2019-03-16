@@ -249,9 +249,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pathType: 0
   isCollectFrameData: 1
-  flatRunForce: 5
-  upHillRunForce: 7
-  downHillRunForce: 5
+  flatRunForce: 8
+  upHillRunForce: 10
+  downHillRunForce: 8
   leftTrigger: {fileID: 0}
   rightTrigger: {fileID: 0}
   jumpTrigger: {fileID: 0}

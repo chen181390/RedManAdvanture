@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class CharacterFrameData
 {
+    public bool isFirstFrame;
+    public Vector3 iniPos;
+    public Quaternion iniRot;
     public Vector2 velocity;
     public float angularVelocity;
 

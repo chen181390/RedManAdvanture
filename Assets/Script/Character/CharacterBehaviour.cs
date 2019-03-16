@@ -24,6 +24,7 @@ public class CharacterBehaviour : MonoBehaviour
     private List<CharacterFrameData> shadowFrameDatas = new List<CharacterFrameData>();
     private CharacterFrameData shadowFrameData = new CharacterFrameData();
     private readonly int frameDataMaxSize = 36000;
+    private bool isFirstFrame = true;
 
     public bool isCollectFrameData = true;
     public float flatRunForce = 8;
@@ -239,7 +240,7 @@ public class CharacterBehaviour : MonoBehaviour
                 if (this.isRightDir)
                 {
                     Vector2 force;
-                    if (!this.isJump)
+                    if (!this.isJump && this.isGround)
                     {
                         switch (this.pathType)
                         {
@@ -266,7 +267,7 @@ public class CharacterBehaviour : MonoBehaviour
                 else
                 {
                     Vector2 force;
-                    if (!this.isJump)
+                    if (!this.isJump && this.isGround)
                     {
                         switch (this.pathType)
                         {
@@ -313,7 +314,7 @@ public class CharacterBehaviour : MonoBehaviour
         if (hit2D.collider)
         {
             this.animator.SetFloat(AniHashCode.vecHeight, hit2D.distance);
-            this.isGround = hit2D.distance <= 1.3 ? true : false;
+            this.isGround = hit2D.distance <= 1.25 ? true : false;
             this.animator.SetBool(AniHashCode.isGround, this.isGround);
 
         }
@@ -327,6 +328,14 @@ public class CharacterBehaviour : MonoBehaviour
 
         if (this.isCollectFrameData)
         {
+            if (this.isFirstFrame)
+            {
+                this.shadowFrameData.isFirstFrame = true;
+                this.shadowFrameData.iniPos = this.transform.position;
+                this.shadowFrameData.iniRot = this.transform.rotation;
+                this.isFirstFrame = false;
+            }
+
             this.shadowFrameData.velocity = this.rigidBody.velocity;
             this.shadowFrameData.angularVelocity = this.rigidBody.angularVelocity;
             this.shadowFrameData.isRun = this.isRun;
@@ -360,6 +369,7 @@ public class CharacterBehaviour : MonoBehaviour
 
         this.shadowFrameData.triggerDead = true;
         this.shadowFrameData.velocity = Vector2.zero;
+        this.shadowFrameData.angularVelocity = 0;
         this.shadowFrameDatas.Add(this.shadowFrameData);
         this.characterShadow.setCharacterFrameDatas(this.shadowFrameDatas.ToArray());
         this.shadowFrameDatas = new List<CharacterFrameData>();
@@ -383,6 +393,7 @@ public class CharacterBehaviour : MonoBehaviour
         this.resetMissionEvent();
         this.isDeading = false;
         this.isCollectFrameData = true;
+        this.isFirstFrame = true;
     }
 
     void OnCollisionEnter2D(Collision2D collision)

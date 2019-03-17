@@ -40,6 +40,7 @@ public class CharacterShadow : MonoBehaviour
         this.playIndex = 0;
         this.animator.CrossFade(AniHashCode.Idle, 0, 0, 0, 0);
         this.isAllowPlay = true;
+        this.animator.ResetTrigger(AniHashCode.triggerDead);
     }
 
     // Update is called once per frame

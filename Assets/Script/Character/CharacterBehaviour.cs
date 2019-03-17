@@ -26,6 +26,7 @@ public class CharacterBehaviour : MonoBehaviour
     private readonly int frameDataMaxSize = 36000;
     private bool isFirstFrame = true;
 
+    public bool isReleaseSpeed;
     public bool isCollectFrameData = true;
     public float flatRunForce = 8;
     public float upHillRunForce = 10;
@@ -235,7 +236,7 @@ public class CharacterBehaviour : MonoBehaviour
 
         if (this.isRun)
         {
-            if (System.Math.Abs(this.rigidBody.velocity.x) < this.maxRunSpeed)
+            if (System.Math.Abs(this.rigidBody.velocity.x) < this.maxRunSpeed || this.isReleaseSpeed)
             {
                 if (this.isRightDir)
                 {

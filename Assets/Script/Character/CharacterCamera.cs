@@ -17,6 +17,7 @@ public class CharacterCamera : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Application.targetFrameRate = 60;
         this.character = GameObject.Find("Character").GetComponent<CharacterBehaviour>();
         this.deathLineRight = GameObject.Find("DeathLineRight");
         this.characterCamera = this.GetComponent<Camera>();

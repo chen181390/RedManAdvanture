@@ -24,7 +24,8 @@ public class CharacterBehaviour : MonoBehaviour
     private List<CharacterFrameData> shadowFrameDatas = new List<CharacterFrameData>();
     private CharacterFrameData shadowFrameData = new CharacterFrameData();
     private readonly int frameDataMaxSize = 36000;
-    private bool isFirstFrame = true;
+    private bool isFirstFrame = false;
+
 
     public bool isReleaseSpeed;
     public bool isCollectFrameData = true;
@@ -394,7 +395,7 @@ public class CharacterBehaviour : MonoBehaviour
         this.resetMissionEvent();
         this.isDeading = false;
         this.isCollectFrameData = true;
-        this.isFirstFrame = true;
+        // this.isFirstFrame = true;
     }
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -402,6 +403,10 @@ public class CharacterBehaviour : MonoBehaviour
         if (this.isGround)
         {
             this.jumpLeftSeg = this.jumpMaxSeg;
+        }
+
+        if (!this.isFirstFrame) {
+            this.isFirstFrame = true;
         }
     }
 }

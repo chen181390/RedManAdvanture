@@ -12,7 +12,7 @@ public class SniperMace : MonoBehaviour
 
     private bool isRight;
     private bool isInRange;
-    private float preShootTime;
+    private float preShootTime = -1000;
     private CharacterBehaviour character;
     private Animator animator;
 

@@ -21,9 +21,15 @@ public class SnipeBullet : MonoBehaviour
     void Start()
     {
         this.character = References.character;
+        this.character.resetMissionEvent += this.resetSnipeBullet;
         this.rigidBody = this.GetComponent<Rigidbody2D>();
         this.rigidBody.AddForce(this.bulletImpulse, ForceMode2D.Impulse);
         Destroy(this.gameObject, this.existTime);
+    }
+
+    private void resetSnipeBullet()
+    {
+        this.gameObject.SetActive(false);
     }
 
     // Update is called once per frame

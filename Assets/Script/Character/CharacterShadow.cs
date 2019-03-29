@@ -44,21 +44,14 @@ public class CharacterShadow : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if (this.frameDatas == null || this.playIndex >= this.frameDatas.Length)
             return;
 
         var frameData = this.frameDatas[this.playIndex];
 
-        if (frameData.isFirstFrame) 
-        {
-            this.transform.SetPositionAndRotation(frameData.iniPos, frameData.iniRot);
-        }
-
-        // 播放移动旋转
-        this.rigidBody.velocity = frameData.velocity;
-        this.rigidBody.angularVelocity = frameData.angularVelocity;
+        this.transform.SetPositionAndRotation(frameData.pos, frameData.rot);
 
         this.animator.SetBool(AniHashCode.isBtnRun, frameData.isRun);
         this.animator.SetBool(AniHashCode.isBtnJump, frameData.isJump);

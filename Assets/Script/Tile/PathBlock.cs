@@ -27,6 +27,7 @@ public class PathBlock : MonoBehaviour
     public GameObject meteorPrefab;
     public Vector2 meteorPos;
     public float meteorImpulse;
+    public bool isMoveOnce;
 
     private CharacterBehaviour character;
     private CharacterCamera characterCamera;
@@ -47,21 +48,19 @@ public class PathBlock : MonoBehaviour
         switch (this.behaviourType)
         {
             case PathBlockBehaviourType.DirectByRoute:
+            case PathBlockBehaviourType.TriggerThenDirectByRoute:
                 for (int i = 0; i < this.routePoints.Length; i++)
                 {
                     this.routePoints[i] = this.transform.parent.TransformPoint(this.routePoints[i]);
                 }
-                this.transform.position = this.routePoints[0];
+                this.iniPos = this.routePoints[0];
+                this.transform.position = this.iniPos;
+                this.iniRot = this.transform.rotation;
                 break;
 
             case PathBlockBehaviourType.Drop:
                 this.rigidBody = this.GetComponent<Rigidbody2D>();
                 this.rigidBody.gravityScale = 0;
-                this.iniPos = this.transform.position;
-                this.iniRot = this.transform.rotation;
-                break;
-
-            case PathBlockBehaviourType.TriggerThenDirectByRoute:
                 this.iniPos = this.transform.position;
                 this.iniRot = this.transform.rotation;
                 break;
@@ -113,7 +112,10 @@ public class PathBlock : MonoBehaviour
                     this.transform.Translate(this.routePoints[routeTarget] - (Vector2)this.transform.position, Space.World);
                     if (this.routeTarget == this.routePoints.Length - 1)
                     {
-                        this.routeTarget = 0;
+                        if (!this.isMoveOnce)
+                            this.routeTarget = 0;
+                        else
+                            this.behaviourType = PathBlockBehaviourType.Motionless;
                     }
                     else
                     {

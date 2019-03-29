@@ -407,6 +407,7 @@ GameObject:
   - component: {fileID: 830413266042858712}
   - component: {fileID: 830413266042858715}
   - component: {fileID: 2561920650804977435}
+  - component: {fileID: 6123072676601004457}
   m_Layer: 0
   m_Name: SniperMace
   m_TagString: Untagged
@@ -448,6 +449,7 @@ MonoBehaviour:
   bulletExistTime: 4
   bulletImpulse: {x: -20, y: 0}
   shootInterval: 4
+  isInvisible: 0
 --- !u!50 &830413266042858715
 Rigidbody2D:
   serializedVersion: 4
@@ -488,6 +490,32 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!61 &6123072676601004457
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 830413266042858713}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -57.462376, y: 2.2173529}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 120.27801, y: 9.210794}
+  m_EdgeRadius: 0
 --- !u!1 &830413266252569448
 GameObject:
   m_ObjectHideFlags: 0
@@ -499,7 +527,6 @@ GameObject:
   - component: {fileID: 830413266252569450}
   - component: {fileID: 830413266252569449}
   - component: {fileID: 830413266252569453}
-  - component: {fileID: 830413266252569452}
   m_Layer: 0
   m_Name: Mace
   m_TagString: Untagged
@@ -678,32 +705,6 @@ PolygonCollider2D:
       - {x: -1.06, y: -2.56}
       - {x: -0.72999996, y: -1.9}
       - {x: -0.41, y: -1.9}
---- !u!61 &830413266252569452
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 830413266252569448}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -64.920425, y: 4.2774997}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 5.12, y: 5.12}
-    newSize: {x: 5.12, y: 5.12}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 134.5802, y: 14.79679}
-  m_EdgeRadius: 0
 --- !u!1 &830413266490620199
 GameObject:
   m_ObjectHideFlags: 0

@@ -9,6 +9,7 @@ public class SniperMace : MonoBehaviour
     public float bulletExistTime;
     public Vector2 bulletImpulse;
     public float shootInterval;
+    public bool isInvisible;
 
     private bool isRight;
     private bool isInRange;
@@ -21,6 +22,25 @@ public class SniperMace : MonoBehaviour
     {
         this.animator = this.GetComponent<Animator>();
         this.character = References.character;
+        if (this.isInvisible) {
+            this.setChildrenActive(false);
+        }
+        this.character.resetMissionEvent += this.resetSniperMace;
+    }
+
+    private void resetSniperMace() 
+    {
+        if (this.isInvisible) {
+            this.setChildrenActive(false);
+        }
+    }
+
+    private void setChildrenActive(bool activeVal) 
+    {
+        for (var i = 0; i < this.transform.childCount; i++)
+        {
+            this.transform.GetChild(i).gameObject.SetActive(activeVal);
+        }
     }
 
     // Update is called once per frame
@@ -40,6 +60,7 @@ public class SniperMace : MonoBehaviour
     {
         if (collider.name == "characterCollider")
         {
+            this.setChildrenActive(true);
             this.isInRange = true;
         }
     }
@@ -61,7 +82,7 @@ public class SniperMace : MonoBehaviour
     }
 
     private void startShoot()
-    {  
+    {
         this.animator.SetTrigger(AniHashCode.triggerShoot);
     }
 

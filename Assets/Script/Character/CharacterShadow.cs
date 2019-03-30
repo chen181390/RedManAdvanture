@@ -46,7 +46,7 @@ public class CharacterShadow : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (this.frameDatas == null || this.playIndex >= this.frameDatas.Length)
+        if (!this.isAllowPlay || this.frameDatas == null || this.playIndex >= this.frameDatas.Length)
             return;
 
         var frameData = this.frameDatas[this.playIndex];

@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 public enum MaceType
 {
-    TriggerThenFieldTrace,
-    TriggerThenShoot
+    TriggerThenTraceGlobal
 }
 
 public enum MaceStatus
@@ -23,6 +22,8 @@ public class Mace : MonoBehaviour
     private MaceStatus status = MaceStatus.Untriggered;
     private CharacterBehaviour character;
     private Rigidbody2D characterRigidBody;
+    private Collider2D triggerCollider;
+
 
     // Start is called before the first frame update
     void Start()
@@ -30,6 +31,7 @@ public class Mace : MonoBehaviour
         this.iniPos = this.transform.position;
         this.character = GameObject.Find("Character").GetComponent<CharacterBehaviour>();
         this.characterRigidBody = this.character.GetComponent<Rigidbody2D>();
+        this.triggerCollider = this.GetComponentsInChildren<Collider2D>()[2];
         this.character.resetMissionEvent += resetMace;
     }
 
@@ -37,15 +39,16 @@ public class Mace : MonoBehaviour
     {
         this.transform.position = this.iniPos;
         this.status = MaceStatus.Untriggered;
+        this.triggerCollider.enabled = true;
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         switch(this.status)
         {
             case MaceStatus.InTrace:
-                var direct = (new Vector2(this.character.transform.position.x, 0) - new Vector2(this.transform.position.x, 0)).normalized;
+                var direct = (this.character.transform.position - this.transform.position).normalized;
                 this.transform.Translate(direct * this.traceSpeed * Time.deltaTime);
                 break;
 
@@ -64,6 +67,7 @@ public class Mace : MonoBehaviour
             {
                 case MaceStatus.Untriggered:
                     this.status = MaceStatus.InTrace;
+                    this.triggerCollider.enabled = false;
                     break;
 
                 case MaceStatus.InTrace:
@@ -79,10 +83,6 @@ public class Mace : MonoBehaviour
         {
             switch (this.status)
             {
-                case MaceStatus.InTrace:
-                    this.status = MaceStatus.Untriggered;
-                    break;
-
                 case MaceStatus.InAttack:
                     this.status = MaceStatus.InTrace;
                     break;
@@ -94,7 +94,6 @@ public class Mace : MonoBehaviour
     {
         if (collision.transform == this.character.transform)
         {
-            // this.character.resetMission();
             this.character.setCharacterDead();
         }
     }

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6623329726431908524}
   - component: {fileID: 1678039453293728959}
   - component: {fileID: 6826458480335919254}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: HillRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -124,6 +124,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pathType: 2
-  cameraFollowType: 1
-  moveType: 0
+  behaviourType: 0
   routePoints: []
+  moveSpeed: 0
+  dropGravity: 0
+  meteorPrefab: {fileID: 0}
+  meteorPos: {x: 0, y: 0}
+  meteorImpulse: 0
+  isMoveOnce: 0

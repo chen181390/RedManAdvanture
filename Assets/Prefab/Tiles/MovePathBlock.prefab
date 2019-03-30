@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 58773694641041601}
   - component: {fileID: 58773694641041600}
   - component: {fileID: 4125338229041035387}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: MovePathBlock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -126,3 +126,7 @@ MonoBehaviour:
   - {x: 159.15, y: -2.33}
   moveSpeed: 1
   dropGravity: 0
+  meteorPrefab: {fileID: 0}
+  meteorPos: {x: 0, y: 0}
+  meteorImpulse: 0
+  isMoveOnce: 0

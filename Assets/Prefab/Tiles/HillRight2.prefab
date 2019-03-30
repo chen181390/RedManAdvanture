@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5681692339648733013}
   - component: {fileID: 3531436715116074097}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: HillRight2
   m_TagString: Untagged
   m_Icon: {fileID: 0}

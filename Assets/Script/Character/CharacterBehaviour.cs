@@ -311,13 +311,14 @@ public class CharacterBehaviour : MonoBehaviour
         this.animator.SetBool(AniHashCode.isBtnJump, this.isJump);
         this.animator.SetFloat(AniHashCode.horSpeed, System.Math.Abs(this.rigidBody.velocity.x));
 
-        RaycastHit2D hit2D = Physics2D.Raycast(this.transform.position, Vector2.down, 50, 511);
+        RaycastHit2D hit2D = Physics2D.Raycast(this.transform.position, Vector2.down, 50, 1024);
         if (hit2D.collider)
         {
             this.animator.SetFloat(AniHashCode.vecHeight, hit2D.distance);
-            this.isGround = hit2D.distance <= 1.25 ? true : false;
+            this.isGround = (hit2D.distance <= 1.2) ? true : false;
             this.animator.SetBool(AniHashCode.isGround, this.isGround);
-
+            if(this.isGround)
+                this.jumpLeftSeg = this.jumpMaxSeg;
         }
         else
         {
@@ -366,17 +367,25 @@ public class CharacterBehaviour : MonoBehaviour
         this.rigidBody.angularVelocity = 0;
         this.isRun = false;
         this.isJump = false;
-    }
 
-    public void resetMission()
-    {
+        // 注入最后一帧
+        this.shadowFrameData.pos = this.transform.position;
+        this.shadowFrameData.rot = this.transform.rotation;
+        this.shadowFrameData.isRun = this.isRun;
+        this.shadowFrameData.isJump = this.isJump;
+        this.shadowFrameData.horSpeed = System.Math.Abs(this.rigidBody.velocity.x);
+        this.shadowFrameData.vecHight = this.vecheight;
+        this.shadowFrameData.isGround = this.isGround;
         this.shadowFrameData.triggerDead = true;
         this.shadowFrameDatas.Add(this.shadowFrameData);
         this.characterShadow.setCharacterFrameDatas(this.shadowFrameDatas.ToArray());
         this.shadowFrameDatas = new List<CharacterFrameData>();
         this.shadowFrameData = new CharacterFrameData();
         this.isCollectFrameData = false;
+    }
 
+    public void resetMission()
+    {
         this.rigidBody.velocity = Vector2.zero;
         this.rigidBody.angularVelocity = 0;
         this.isRightDir = true;
@@ -391,13 +400,5 @@ public class CharacterBehaviour : MonoBehaviour
         this.resetMissionEvent();
         this.isDeading = false;
         this.isCollectFrameData = true;
-    }
-
-    void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (this.isGround)
-        {
-            this.jumpLeftSeg = this.jumpMaxSeg;
-        }
     }
 }

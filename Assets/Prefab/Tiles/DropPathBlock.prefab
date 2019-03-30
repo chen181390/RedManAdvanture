@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1693140801115740330}
   - component: {fileID: 1693140801115740342}
   - component: {fileID: 8807943867174537188}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: DropPathBlock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -142,7 +142,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pathType: 0
-  cameraFollowType: 0
   behaviourType: 2
   routePoints: []
+  moveSpeed: 0
   dropGravity: 15
+  meteorPrefab: {fileID: 0}
+  meteorPos: {x: 0, y: 0}
+  meteorImpulse: 0
+  isMoveOnce: 0

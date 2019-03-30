@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5154946869773485066}
   - component: {fileID: 5154946869773485067}
   - component: {fileID: 5154946869773485064}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Cloud
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -85,7 +85,7 @@ GameObject:
   - component: {fileID: 5154946870521922818}
   - component: {fileID: 5154946870521922821}
   - component: {fileID: 5154946870521922819}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: CloudSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}

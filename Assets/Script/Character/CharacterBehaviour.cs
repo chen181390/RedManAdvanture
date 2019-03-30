@@ -315,10 +315,8 @@ public class CharacterBehaviour : MonoBehaviour
         if (hit2D.collider)
         {
             this.animator.SetFloat(AniHashCode.vecHeight, hit2D.distance);
-            this.isGround = (hit2D.distance <= 1.2) ? true : false;
+            this.isGround = (hit2D.distance <= 1.25) ? true : false;
             this.animator.SetBool(AniHashCode.isGround, this.isGround);
-            if(this.isGround)
-                this.jumpLeftSeg = this.jumpMaxSeg;
         }
         else
         {
@@ -400,5 +398,11 @@ public class CharacterBehaviour : MonoBehaviour
         this.resetMissionEvent();
         this.isDeading = false;
         this.isCollectFrameData = true;
+    }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (this.isGround)
+            this.jumpLeftSeg = this.jumpMaxSeg;
     }
 }

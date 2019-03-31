@@ -13,9 +13,14 @@ public class UIMission : MonoBehaviour
     public GameObject gameController;
     public Image btnPause;
     public Sprite[] btnPauseImgs;
+    public Image btnPreMission;
+    public Sprite[] btnPreMissionImgs;
+    public Image btnNextMission;
+    public Sprite[] btnNextMissionImgs;
 
     private bool isFadeOutOver = false;
     private float originTimeScale;
+    private DeathLine rightDeathLine;
 
     // Start is called before the first frame update
     void Start()
@@ -26,10 +31,13 @@ public class UIMission : MonoBehaviour
             this.gameController.SetActive(false);
         }
         this.btnPause.gameObject.SetActive(false);
-        this.registerBtnPauseGame();
+        this.btnNextMission.gameObject.SetActive(false);
+        this.btnPreMission.gameObject.SetActive(false);
+        this.rightDeathLine = GameObject.Find("DeathLineRight").GetComponent<DeathLine>();
+        this.registerEvent();
     }
 
-    private void registerBtnPauseGame()
+    private void registerEvent()
     {
         var pauseTrigger = this.btnPause.GetComponent<EventTrigger>();
 
@@ -50,6 +58,44 @@ public class UIMission : MonoBehaviour
         entry.callback = new EventTrigger.TriggerEvent();
         entry.callback.AddListener(this.onBtnPauseGameExit);
         pauseTrigger.triggers.Add(entry);
+
+        var preMissionTrigger = this.btnPreMission.GetComponent<EventTrigger>();
+        entry = new EventTrigger.Entry();
+        entry.eventID = EventTriggerType.PointerDown;
+        entry.callback = new EventTrigger.TriggerEvent();
+        entry.callback.AddListener(this.onBtnPreMissionDown);
+        preMissionTrigger.triggers.Add(entry);
+
+        entry = new EventTrigger.Entry();
+        entry.eventID = EventTriggerType.PointerUp;
+        entry.callback = new EventTrigger.TriggerEvent();
+        entry.callback.AddListener(this.onBtnPreMissionUp);
+        preMissionTrigger.triggers.Add(entry);
+
+        entry = new EventTrigger.Entry();
+        entry.eventID = EventTriggerType.PointerExit;
+        entry.callback = new EventTrigger.TriggerEvent();
+        entry.callback.AddListener(this.onBtnPreMissionExit);
+        preMissionTrigger.triggers.Add(entry);
+
+        var nextMissionTrigger = this.btnNextMission.GetComponent<EventTrigger>();
+        entry = new EventTrigger.Entry();
+        entry.eventID = EventTriggerType.PointerDown;
+        entry.callback = new EventTrigger.TriggerEvent();
+        entry.callback.AddListener(this.onBtnNextMissionDown);
+        nextMissionTrigger.triggers.Add(entry);
+
+        entry = new EventTrigger.Entry();
+        entry.eventID = EventTriggerType.PointerUp;
+        entry.callback = new EventTrigger.TriggerEvent();
+        entry.callback.AddListener(this.onBtnNextMissionUp);
+        nextMissionTrigger.triggers.Add(entry);
+
+        entry = new EventTrigger.Entry();
+        entry.eventID = EventTriggerType.PointerExit;
+        entry.callback = new EventTrigger.TriggerEvent();
+        entry.callback.AddListener(this.onBtnNextMissionExit);
+        nextMissionTrigger.triggers.Add(entry);
     }
 
     // Update is called once per frame
@@ -74,6 +120,8 @@ public class UIMission : MonoBehaviour
                 this.isFadeOutOver = true;
                 this.gameController.SetActive(true);
                 this.btnPause.gameObject.SetActive(true);
+                this.btnNextMission.gameObject.SetActive(true);
+                this.btnPreMission.gameObject.SetActive(true);
                 this.touchBlock.gameObject.SetActive(false);
             }
         }
@@ -114,5 +162,42 @@ public class UIMission : MonoBehaviour
             this.btnPause.sprite = this.btnPauseImgs[0];
         else if (this.btnPause.sprite == this.btnPauseImgs[3])
             this.btnPause.sprite = this.btnPauseImgs[2];
+    }
+
+    public void onBtnPreMissionDown(BaseEventData eventData)
+    {
+        this.btnPreMission.sprite = this.btnPreMissionImgs[1];
+    }
+
+    public void onBtnPreMissionUp(BaseEventData eventData)
+    {
+        if (this.btnPreMission.sprite == this.btnPreMissionImgs[1]) {
+            this.btnPreMission.sprite = this.btnPreMissionImgs[0];
+            this.rightDeathLine.loadPreScene();
+        }
+    }
+
+    public void onBtnPreMissionExit(BaseEventData eventData)
+    {
+        this.btnPreMission.sprite = this.btnPreMissionImgs[0];
+    }
+
+    public void onBtnNextMissionDown(BaseEventData eventData)
+    {
+        this.btnNextMission.sprite = this.btnNextMissionImgs[1];
+    }
+
+    public void onBtnNextMissionUp(BaseEventData eventData)
+    {
+        if (this.btnNextMission.sprite == this.btnNextMissionImgs[1])
+        {
+            this.btnNextMission.sprite = this.btnNextMissionImgs[0];
+            this.rightDeathLine.loadNextScene();
+        }
+    }
+
+    public void onBtnNextMissionExit(BaseEventData eventData)
+    {
+        this.btnNextMission.sprite = this.btnNextMissionImgs[0];
     }
 }

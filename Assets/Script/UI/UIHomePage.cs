@@ -18,6 +18,9 @@ public class UIHomePage : MonoBehaviour,IPointerClickHandler
     private Animator animator;
     public GameObject panel;
     public GameObject btnPause;
+    public GameObject btnPreMission;
+    public GameObject btnNextMission;
+
     private bool allowStart;
 
     // Start is called before the first frame update
@@ -42,6 +45,8 @@ public class UIHomePage : MonoBehaviour,IPointerClickHandler
                 this.panel.SetActive(false);
                 this.character.setCharacterIniPos(this.character.transform.position);
                 this.btnPause.SetActive(true);
+                this.btnPreMission.SetActive(true);
+                this.btnNextMission.SetActive(true);
                 this.character.isCollectFrameData = true;
             }
         }

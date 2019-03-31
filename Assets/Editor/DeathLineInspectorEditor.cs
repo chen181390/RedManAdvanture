@@ -12,6 +12,7 @@ public class DeathLineInspectorEditor : Editor
     private SerializedProperty touchBlock;
     private SerializedProperty fadeInSpeed;
     private SerializedProperty nextScene;
+    private SerializedProperty preScene;
 
 void OnEnable()
 {
@@ -21,6 +22,7 @@ void OnEnable()
     this.touchBlock = this.deathLine.FindProperty("touchBlock");
     this.fadeInSpeed = this.deathLine.FindProperty("fadeInSpeed");
     this.nextScene = this.deathLine.FindProperty("nextScene");
+    this.preScene = this.deathLine.FindProperty("preScene");
 }
 
 public override void OnInspectorGUI()
@@ -35,6 +37,7 @@ public override void OnInspectorGUI()
             EditorGUILayout.PropertyField(this.touchBlock);
             EditorGUILayout.PropertyField(this.fadeInSpeed);
             EditorGUILayout.PropertyField(this.nextScene);
+            EditorGUILayout.PropertyField(this.preScene);
             break;
     }
 

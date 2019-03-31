@@ -20,6 +20,7 @@ public class DeathLine : MonoBehaviour
     [Tooltip("进入下一关前黑色淡入的速度（每帧）")]
     public float fadeInSpeed;
     public int nextScene;
+    public int preScene;
 
     private AsyncOperation asyncOperation;
     private bool isLoading = false;
@@ -64,18 +65,30 @@ public class DeathLine : MonoBehaviour
                     break;
 
                 case DeathLineType.Right:
-                    if (this.isLoading) return;
-                    this.asyncOperation = SceneManager.LoadSceneAsync(this.nextScene);
-                    this.asyncOperation.allowSceneActivation = false;
-                    this.isLoading = true;
-                    this.touchBlock.gameObject.SetActive(true);
+                    this.loadNextScene();
                     break;
 
 
             }
         }
+    }
 
+    public void loadNextScene()
+    {
+        if (this.isLoading)
+            return;
+        this.asyncOperation = SceneManager.LoadSceneAsync(this.nextScene);
+        this.asyncOperation.allowSceneActivation = false;
+        this.isLoading = true;
+        this.touchBlock.gameObject.SetActive(true);
+    }
 
-
+    public void loadPreScene() {
+        if (this.isLoading)
+            return;
+        this.asyncOperation = SceneManager.LoadSceneAsync(this.preScene);
+        this.asyncOperation.allowSceneActivation = false;
+        this.isLoading = true;
+        this.touchBlock.gameObject.SetActive(true);
     }
 }

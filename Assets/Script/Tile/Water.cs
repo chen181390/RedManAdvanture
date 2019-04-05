@@ -15,7 +15,7 @@ public class Water : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         this.spriteRenderer.sprite = this.waterAtlas[this.currAtlasIndex];
         this.currAtlasIndex ++;

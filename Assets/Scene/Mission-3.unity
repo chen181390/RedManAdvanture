@@ -10292,7 +10292,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startPosLimitX: -8.41
-  maxLimitY: 18.49
+  maxLimitY: 17.37
   minLimitY: -1
 --- !u!95 &1327549198
 Animator:

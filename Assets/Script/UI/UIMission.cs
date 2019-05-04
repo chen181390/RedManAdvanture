@@ -19,7 +19,6 @@ public class UIMission : MonoBehaviour
     public Sprite[] btnNextMissionImgs;
 
     private bool isFadeOutOver = false;
-    private float originTimeScale;
     private DeathLine rightDeathLine;
 
     // Start is called before the first frame update
@@ -140,7 +139,6 @@ public class UIMission : MonoBehaviour
         if (this.btnPause.sprite == this.btnPauseImgs[1])
         {
             this.btnPause.sprite = this.btnPauseImgs[2];
-            this.originTimeScale = Time.timeScale;
             Time.timeScale = 0;
             this.touchBlock.color = new Color(this.touchBlock.color.r, this.touchBlock.color.g, this.touchBlock.color.b, 0.5f);
             this.touchBlock.gameObject.SetActive(true);
@@ -149,7 +147,7 @@ public class UIMission : MonoBehaviour
         else if (this.btnPause.sprite == this.btnPauseImgs[3])
         {
             this.btnPause.sprite = this.btnPauseImgs[0];
-            Time.timeScale = this.originTimeScale;
+            Time.timeScale = 1;
             this.touchBlock.color = new Color(this.touchBlock.color.r, this.touchBlock.color.g, this.touchBlock.color.b, 0);
             this.touchBlock.gameObject.SetActive(false);
             References.character.isCollectFrameData = true;
@@ -173,6 +171,7 @@ public class UIMission : MonoBehaviour
     {
         if (this.btnPreMission.sprite == this.btnPreMissionImgs[1]) {
             this.btnPreMission.sprite = this.btnPreMissionImgs[0];
+            Time.timeScale = 1;
             this.rightDeathLine.loadPreScene();
         }
     }
@@ -192,6 +191,7 @@ public class UIMission : MonoBehaviour
         if (this.btnNextMission.sprite == this.btnNextMissionImgs[1])
         {
             this.btnNextMission.sprite = this.btnNextMissionImgs[0];
+            Time.timeScale = 1;
             this.rightDeathLine.loadNextScene();
         }
     }

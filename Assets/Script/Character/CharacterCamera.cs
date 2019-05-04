@@ -11,21 +11,24 @@ public class CharacterCamera : MonoBehaviour
     private float endPosLimitX;
     public float maxLimitY;
     public float minLimitY;
-    private GameObject deathLineRight;
+    public GameObject deathLineRight;
+    public GameObject deathLineLeft;
 
 
     // Start is called before the first frame update
     void Start()
     {
         Application.targetFrameRate = 60;
-        this.character = GameObject.Find("Character").GetComponent<CharacterBehaviour>();
-        this.deathLineRight = GameObject.Find("DeathLineRight");
+        this.character = References.character;
         this.characterCamera = this.GetComponent<Camera>();
         float defaultSize = this.characterCamera.orthographicSize;
         this.characterCamera.orthographicSize = (float)Screen.height / 100 / 2;
 
-        this.startPosLimitX += this.characterCamera.orthographicSize - defaultSize;
+        this.startPosLimitX = this.deathLineLeft.transform.position.x + (float)Screen.width / 100 / 2;
         this.endPosLimitX = this.deathLineRight.transform.position.x - (float)Screen.width / 100 / 2;
+        this.maxLimitY -= this.characterCamera.orthographicSize - defaultSize;
+        this.minLimitY += this.characterCamera.orthographicSize - defaultSize;
+
 
         this.cameraCharacterDistanceX = (0.5f - 0.382f) * this.characterCamera.orthographicSize * 2;
         this.cameraCharacterDistanceY = this.characterCamera.transform.position.y - this.character.transform.position.y;

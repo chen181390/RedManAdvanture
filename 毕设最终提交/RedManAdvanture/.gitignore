@@ -1,0 +1,9 @@
+.vscode/
+Library/
+Temp/
+obj/
+Assembly-CSharp.csproj
+Packages/
+MonoBleedingEdge/
+Logs/
+Assembly-CSharp-Editor.csproj
